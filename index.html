@@ -2623,6 +2623,86 @@ h1, h2, h3, h4, h5, h6, p, a, button, label, blockquote{
 
 }
 
+
+/* =========================================================
+   PUBLIC PROJECT VIEWER
+   ========================================================= */
+
+.project-viewer{
+    position:fixed;
+    inset:0;
+    z-index:6000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:rgba(5,10,20,.88);
+    backdrop-filter:blur(10px);
+    opacity:0;
+    visibility:hidden;
+    transition:.3s ease;
+}
+
+.project-viewer.open{
+    opacity:1;
+    visibility:visible;
+}
+
+.project-viewer-box{
+    position:relative;
+    width:min(1000px,100%);
+    max-height:90vh;
+    overflow:auto;
+    padding:28px;
+    background:#fff;
+    color:var(--navy);
+}
+
+.project-viewer-close{
+    position:absolute;
+    top:12px;
+    right:12px;
+    z-index:2;
+    width:38px;
+    height:38px;
+    border:1px solid var(--line);
+    border-radius:50%;
+    background:#fff;
+    color:var(--navy);
+    font-size:22px;
+}
+
+.project-viewer-title{
+    margin:0 50px 20px 0;
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:clamp(30px,5vw,52px);
+    font-weight:400;
+}
+
+.project-viewer-media{
+    width:100%;
+    background:#08111f;
+}
+
+.project-viewer-media video,
+.project-viewer-media img{
+    display:block;
+    width:100%;
+    max-height:70vh;
+    object-fit:contain;
+}
+
+.project-viewer-empty{
+    padding:60px 25px;
+    text-align:center;
+    color:#657185;
+    font-size:13px;
+}
+
+.work-project[data-project-id]{
+    cursor:pointer;
+}
+
 </style>
 </head>
 
@@ -4131,6 +4211,17 @@ h1, h2, h3, h4, h5, h6, p, a, button, label, blockquote{
 </div>
 
 
+
+
+<!-- PROJECT VIEWER -->
+<div class="project-viewer" id="projectViewer" aria-hidden="true">
+    <div class="project-viewer-box">
+        <button class="project-viewer-close" id="closeProjectViewer" type="button">×</button>
+        <h2 class="project-viewer-title" id="projectViewerTitle"></h2>
+        <div class="project-viewer-media" id="projectViewerMedia"></div>
+    </div>
+</div>
+
 <!-- =======================================================
      SUPABASE
      ======================================================= -->
@@ -4794,53 +4885,235 @@ function publicProjectType(value){
     return publicProjectCategory(value);
 }
 
-function renderPublicProjects(projects){
+function renderPublicProjects(projects,mediaItems){
     const track = document.getElementById("workResults");
     if(!track) return;
+
+    const videoMedia = (mediaItems || []).filter(media=>{
+        const type = String(media.type || "").toLowerCase();
+        return type.includes("video") ||
+            /\.(mp4|webm|mov)(\?|$)/i.test(String(media.url || ""));
+    });
+
+    function normalize(value){
+        return String(value || "")
+            .toLowerCase()
+            .replace(/\.[a-z0-9]+$/i,"")
+            .replace(/[^a-z0-9]+/g," ")
+            .trim();
+    }
+
+    function findProjectVideo(project){
+        const title = normalize(project.title);
+        const slug = normalize(project.slug);
+
+        return videoMedia.find(media=>{
+            const name = normalize(media.name);
+            const folder = normalize(media.folder);
+
+            return (
+                (title && (name === title || folder === title)) ||
+                (slug && (name === slug || folder === slug)) ||
+                (title && name.includes(title)) ||
+                (title && folder.includes(title))
+            );
+        }) || null;
+    }
 
     track.innerHTML = projects.map(project=>{
         const mainCategory = publicProjectType(project.subcategory);
         const subCategory = publicProjectCategory(project.category) || "all";
+
         const image = project.cover_image
             ? `<img src="${project.cover_image}" alt="${String(project.title || "DyOla project").replace(/"/g,"&quot;")}" loading="lazy">`
             : "";
-        const tag = [project.subcategory,project.category].filter(Boolean).join(" · ");
-        const meta = project.description || project.client || "DyOla Films production";
 
-        return `<a class="work-project" href="#" data-category="${mainCategory}" data-subcategory="${subCategory}">
+        const tag = [project.subcategory,project.category]
+            .filter(Boolean)
+            .join(" · ");
+
+        const meta = project.description ||
+            project.client ||
+            "DyOla Films production";
+
+        const projectVideo = findProjectVideo(project);
+
+        const videoUrl = projectVideo
+            ? projectVideo.url
+            : "";
+
+        return `<a
+            class="work-project"
+            href="#"
+            data-project-id="${project.id}"
+            data-video-url="${String(videoUrl || "").replace(/"/g,"&quot;")}"
+            data-category="${mainCategory}"
+            data-subcategory="${subCategory}"
+        >
             <div class="work-project-image">${image}</div>
+
             <div class="work-project-info">
-                <div class="work-project-tag">${tag || "DyOla Films"}</div>
+                <div class="work-project-tag">
+                    ${tag || "DyOla Films"}
+                </div>
+
                 <h3>${project.title || "Untitled Project"}</h3>
-                <div class="work-project-meta">${meta}</div>
+
+                <div class="work-project-meta">
+                    ${meta}
+                </div>
             </div>
         </a>`;
     }).join("");
 
-    workProjects = Array.from(track.querySelectorAll(".work-project"));
+    workProjects = Array.from(
+        track.querySelectorAll(".work-project")
+    );
+
     filterWorkProjects();
 }
 
+
 async function loadPublicProjects(){
     try{
-        const result = await supabaseClient
+
+        const projectResult = await supabaseClient
             .from("projects")
             .select("id,title,slug,description,category,subcategory,client,location,cover_image,featured,published,created_at,updated_at")
             .eq("published",true)
             .order("created_at",{ascending:false});
 
-        if(result.error){
-            console.error("Could not load public projects:",result.error);
+        if(projectResult.error){
+            console.error(
+                "Could not load public projects:",
+                projectResult.error
+            );
             return;
         }
 
-        renderPublicProjects(result.data || []);
+        const mediaResult = await supabaseClient
+            .from("media")
+            .select("id,name,type,folder,url,r2_key");
+
+        if(mediaResult.error){
+            console.error(
+                "Could not load project media:",
+                mediaResult.error
+            );
+        }
+
+        renderPublicProjects(
+            projectResult.data || [],
+            mediaResult.data || []
+        );
+
     }catch(error){
-        console.error("Could not load public projects:",error);
+
+        console.error(
+            "Could not load public projects:",
+            error
+        );
+
     }
 }
 
 loadPublicProjects();
+
+/* =========================================================
+   PUBLIC PROJECT VIEWER
+   ========================================================= */
+
+const projectViewer = document.getElementById("projectViewer");
+const closeProjectViewer = document.getElementById("closeProjectViewer");
+const projectViewerTitle = document.getElementById("projectViewerTitle");
+const projectViewerMedia = document.getElementById("projectViewerMedia");
+
+function closePublicProjectViewer(){
+    if(!projectViewer) return;
+
+    const video = projectViewerMedia?.querySelector("video");
+    if(video){
+        video.pause();
+        video.removeAttribute("src");
+        video.load();
+    }
+
+    if(projectViewerMedia){
+        projectViewerMedia.innerHTML = "";
+    }
+
+    projectViewer.classList.remove("open");
+    projectViewer.setAttribute("aria-hidden","true");
+    document.body.classList.remove("modal-open");
+}
+
+function openPublicProjectViewer(card){
+    if(!projectViewer || !projectViewerMedia) return;
+
+    const title = card.querySelector(".work-project-info h3")?.textContent.trim() || "DyOla Project";
+    const videoUrl = card.dataset.videoUrl || "";
+
+    projectViewerTitle.textContent = title;
+    projectViewerMedia.innerHTML = "";
+
+    if(videoUrl){
+        const video = document.createElement("video");
+        video.src = videoUrl;
+        video.controls = true;
+        video.playsInline = true;
+        video.autoplay = true;
+        video.muted = true;
+        video.preload = "auto";
+
+        const poster = card.querySelector(".work-project-image img");
+        if(poster && poster.src){
+            video.poster = poster.src;
+        }
+
+        projectViewerMedia.appendChild(video);
+
+        video.addEventListener("error",()=>{
+            console.error("Project video could not be loaded:",video.error,videoUrl);
+        });
+
+        video.play().catch(error=>{
+            console.warn("Project video autoplay was blocked. Use the play button in the video controls.",error);
+        });
+    }else{
+        const image = card.querySelector(".work-project-image img");
+        if(image && image.src){
+            const img = document.createElement("img");
+            img.src = image.src;
+            img.alt = title;
+            projectViewerMedia.appendChild(img);
+        }else{
+            const empty = document.createElement("div");
+            empty.className = "project-viewer-empty";
+            empty.textContent = "No project media is linked to this project yet.";
+            projectViewerMedia.appendChild(empty);
+        }
+    }
+
+    projectViewer.classList.add("open");
+    projectViewer.setAttribute("aria-hidden","false");
+    document.body.classList.add("modal-open");
+}
+
+document.addEventListener("click",function(event){
+    const card = event.target.closest(".work-project[data-project-id]");
+    if(!card) return;
+
+    event.preventDefault();
+    openPublicProjectViewer(card);
+});
+
+closeProjectViewer?.addEventListener("click",closePublicProjectViewer);
+
+projectViewer?.addEventListener("click",function(event){
+    if(event.target === projectViewer){
+        closePublicProjectViewer();
+    }
+});
 
 
 /* =========================================================
