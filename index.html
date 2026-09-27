@@ -4693,6 +4693,28 @@ function applySectionMedia(sectionKey,mediaItems){
     }
 }
 
+}
+
+function applyPublicSectionContent(item){
+    const config = PUBLIC_SECTION_MAP[item.section_key];
+    if(!config) return;
+
+    const section = document.querySelector(config.section);
+    if(!section) return;
+
+    if(config.heading){
+        const heading = section.querySelector(config.heading);
+        if(heading && item.heading) heading.textContent = item.heading;
+    }
+
+    if(config.text){
+        const text = section.querySelector(config.text);
+        if(text && item.text) text.textContent = item.text;
+    }
+
+    section.style.display = item.visible === false ? 'none' : '';
+}
+
 async function loadPublicWebsiteContent(){
     try{
         const result = await supabaseClient
