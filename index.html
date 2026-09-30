@@ -3727,6 +3727,32 @@ h1, h2, h3, h4, h5, h6, p, a, button, label, blockquote{
     margin-inline:auto;
 }
 
+/* WHAT WE DO — DYOLA BLUE */
+#services{
+    background:#0A1931;
+    color:#F5F7FA;
+}
+
+#services .kicker,
+#services .service-number,
+#services .services-title,
+#services .service-card h3,
+#services .service-card p{
+    color:#F5F7FA;
+}
+
+#services .services-title span{
+    color:#B0B7C3 !important;
+}
+
+#services .service-grid{
+    border-top-color:rgba(245,247,250,.22);
+}
+
+#services .service-card{
+    border-right-color:rgba(245,247,250,.22);
+}
+
 /* WHAT WE DO */
 #services .services-title{
     font-size:clamp(38px,6.2vw,88px);
@@ -7637,264 +7663,6 @@ loadApprovedReviews();
 
 
 
-
-/* =========================================================
-   SECTION-BASED PAGE NAVIGATION
-
-   Each major section behaves like its own page boundary, while
-   its internal content remains normally scrollable. A new major
-   section always opens from its own top.
-   ========================================================= */
-
-(function(){
-    const majorSections = Array.from(document.querySelectorAll(
-        '.hero, #services, #recent-jobs, .statement, #work, #approach, .trust, #about, #final-page'
-    ));
-
-    if(majorSections.length < 2) return;
-
-    let transitionLocked = false;
-    let touchStartY = null;
-    let touchStartX = null;
-    let touchBoundaryTarget = null;
-    let touchBoundaryDirection = 0;
-    let touchBoundaryDistance = 0;
-
-    const sectionNames = {
-        'services':'What We Do',
-        'recent-jobs':'Recent Jobs',
-        'work':'Selected Work',
-        'approach':'Our Approach',
-        'about':'About DyOla',
-        'contact':'Contact'
-    };
-
-    function sectionTop(section){
-        return Math.max(0, Math.round(window.scrollY + section.getBoundingClientRect().top));
-    }
-
-    function nearTop(section){
-        return window.scrollY <= sectionTop(section) + 6;
-    }
-
-    function nearBottom(section){
-        return window.scrollY + window.innerHeight >= sectionTop(section) + section.offsetHeight - 6;
-    }
-
-    function currentSectionIndex(){
-        const viewportPoint = window.scrollY + Math.min(window.innerHeight * .5, 420);
-        let bestIndex = 0;
-        let bestDistance = Infinity;
-
-        majorSections.forEach(function(section,index){
-            const top = sectionTop(section);
-            const bottom = top + section.offsetHeight;
-
-            if(viewportPoint >= top && viewportPoint <= bottom){
-                bestIndex = index;
-                bestDistance = 0;
-                return;
-            }
-
-            const distance = viewportPoint < top
-                ? top - viewportPoint
-                : viewportPoint - bottom;
-
-            if(distance < bestDistance){
-                bestDistance = distance;
-                bestIndex = index;
-            }
-        });
-
-        return bestIndex;
-    }
-
-    function getTarget(direction){
-        const index = currentSectionIndex();
-        return direction > 0 ? majorSections[index + 1] : majorSections[index - 1];
-    }
-
-    function getSectionLabel(section){
-        if(!section) return '';
-        if(section.classList.contains('hero')) return 'Home';
-        return sectionNames[section.id] || section.querySelector('h2,h1')?.textContent?.trim() || 'Next section';
-    }
-
-    function showMobileBoundaryCue(target,direction,distance){
-        if(window.innerWidth > 850 || !target) return;
-
-        let cue = document.getElementById('dyolaSectionHandoffCue');
-        if(!cue){
-            cue = document.createElement('div');
-            cue.id = 'dyolaSectionHandoffCue';
-            cue.className = 'dyola-section-handoff-cue';
-            cue.innerHTML = '<span class="dyola-section-handoff-arrow"></span><span class="dyola-section-handoff-text"></span>';
-            document.body.appendChild(cue);
-        }
-
-        const progress = Math.min(distance / 110, 1);
-        cue.querySelector('.dyola-section-handoff-text').textContent =
-            (direction > 0 ? 'Swipe up · ' : 'Swipe down · ') + getSectionLabel(target);
-        cue.querySelector('.dyola-section-handoff-arrow').style.transform =
-            'translateY(' + (direction > 0 ? (1-progress) * 5 : -(1-progress) * 5) + 'px)';
-        cue.classList.add('is-visible');
-    }
-
-    function hideMobileBoundaryCue(){
-        const cue = document.getElementById('dyolaSectionHandoffCue');
-        if(cue) cue.classList.remove('is-visible');
-    }
-
-    function runTransition(direction){
-        if(transitionLocked) return false;
-
-        const index = currentSectionIndex();
-        const current = majorSections[index];
-        const target = direction > 0
-            ? majorSections[index + 1]
-            : majorSections[index - 1];
-
-        if(!current || !target) return false;
-        if(direction > 0 && !nearBottom(current)) return false;
-        if(direction < 0 && !nearTop(current)) return false;
-
-        transitionLocked = true;
-        hideMobileBoundaryCue();
-
-        target.classList.remove('major-section-transitioning');
-        void target.offsetWidth;
-        target.classList.add('major-section-transitioning');
-
-        // Always enter the new section at its own top.
-        window.scrollTo({
-            top: sectionTop(target),
-            behavior: 'smooth'
-        });
-
-        // Correct any tiny browser rounding difference after the smooth move.
-        window.setTimeout(function(){
-            window.scrollTo(0, sectionTop(target));
-            target.classList.remove('major-section-transitioning');
-            transitionLocked = false;
-        }, 820);
-
-        return true;
-    }
-
-    window.addEventListener('wheel',function(event){
-        if(transitionLocked) return;
-        if(Math.abs(event.deltaY) < 40) return;
-
-        const direction = event.deltaY > 0 ? 1 : -1;
-        const index = currentSectionIndex();
-        const current = majorSections[index];
-
-        if(!current) return;
-
-        const atBoundary = direction > 0
-            ? nearBottom(current)
-            : nearTop(current);
-
-        if(atBoundary && runTransition(direction)){
-            event.preventDefault();
-        }
-    },{passive:false});
-
-    window.addEventListener('touchstart',function(event){
-        if(event.touches.length !== 1) return;
-        touchStartY = event.touches[0].clientY;
-        touchStartX = event.touches[0].clientX;
-        touchBoundaryTarget = null;
-        touchBoundaryDirection = 0;
-        touchBoundaryDistance = 0;
-        hideMobileBoundaryCue();
-    },{passive:true});
-
-    window.addEventListener('touchmove',function(event){
-        if(touchStartY === null || event.touches.length !== 1 || transitionLocked) return;
-
-        const currentY = event.touches[0].clientY;
-        const currentX = event.touches[0].clientX;
-        const deltaY = touchStartY - currentY;
-        const deltaX = touchStartX - currentX;
-
-        if(Math.abs(deltaY) < 12 || Math.abs(deltaY) < Math.abs(deltaX) * 1.2) return;
-
-        const direction = deltaY > 0 ? 1 : -1;
-        const index = currentSectionIndex();
-        const current = majorSections[index];
-        const target = direction > 0 ? majorSections[index + 1] : majorSections[index - 1];
-
-        if(!current || !target) return;
-
-        const atBoundary = direction > 0
-            ? nearBottom(current)
-            : nearTop(current);
-
-        if(!atBoundary) return;
-
-        touchBoundaryTarget = target;
-        touchBoundaryDirection = direction;
-        touchBoundaryDistance = Math.abs(deltaY);
-
-        showMobileBoundaryCue(target,direction,touchBoundaryDistance);
-
-        // Once the user is at a real section boundary, stop the browser
-        // from rubber-banding the current section while they choose whether
-        // to continue into the next page.
-        if(touchBoundaryDistance >= 42){
-            event.preventDefault();
-        }
-    },{passive:false});
-
-    window.addEventListener('touchend',function(){
-        if(touchStartY === null) return;
-
-        const direction = touchBoundaryDirection;
-        const distance = touchBoundaryDistance;
-        const target = touchBoundaryTarget;
-
-        touchStartY = null;
-        touchStartX = null;
-        touchBoundaryTarget = null;
-        touchBoundaryDirection = 0;
-        touchBoundaryDistance = 0;
-        hideMobileBoundaryCue();
-
-        // Require a deliberate swipe at the boundary.
-        if(target && distance >= 82){
-            runTransition(direction);
-        }
-    },{passive:true});
-
-    window.addEventListener('touchcancel',function(){
-        touchStartY = null;
-        touchStartX = null;
-        touchBoundaryTarget = null;
-        touchBoundaryDirection = 0;
-        touchBoundaryDistance = 0;
-        hideMobileBoundaryCue();
-    },{passive:true});
-
-    window.addEventListener('keydown',function(event){
-        if(transitionLocked) return;
-
-        if(event.key === 'PageDown' || event.key === 'PageUp'){
-            const direction = event.key === 'PageDown' ? 1 : -1;
-            const index = currentSectionIndex();
-            const current = majorSections[index];
-            if(!current) return;
-
-            const atBoundary = direction > 0
-                ? nearBottom(current)
-                : nearTop(current);
-
-            if(atBoundary && runTransition(direction)){
-                event.preventDefault();
-            }
-        }
-    });
-})();
 
 /* =========================================================
    ESCAPE KEY
