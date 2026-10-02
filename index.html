@@ -104,8 +104,7 @@ img{
             rgba(6,16,29,.32),
             rgba(6,16,29,.12)
         ),
-        url("https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?auto=format&fit=crop&w=2200&q=90")
-        center/cover no-repeat;
+        #08111f;
     transform:scale(1.02);
 }
 
@@ -217,7 +216,9 @@ img{
 }
 
 .hero-word{
-    display:inline-block;
+    display:block;
+    width:max-content;
+    max-width:100%;
 
     opacity:0;
     transform:translateY(70px);
@@ -640,6 +641,22 @@ p{
     font-size:13px;
 }
 
+.service-link{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    margin-top:20px;
+    color:inherit;
+    font-size:12px;
+    text-decoration:none;
+    transition:opacity .25s ease, transform .25s ease;
+}
+
+.service-link:hover{
+    opacity:.65;
+    transform:translateX(3px);
+}
+
 
 /* =========================================================
    GLIMPSE
@@ -1005,7 +1022,8 @@ p{
 
 .visual-work-card[hidden]{display:none!important}
 
-.visual-work-card img{
+.visual-work-card img,
+.visual-work-card video{
     width:100%;
     height:100%;
     object-fit:cover;
@@ -1021,7 +1039,8 @@ p{
     z-index:1;
 }
 
-.visual-work-card:hover img{
+.visual-work-card:hover img,
+.visual-work-card:hover video{
     transform:scale(1.045);
 }
 
@@ -1466,14 +1485,15 @@ p{
 .client-marquee-track{display:flex;width:max-content;align-items:center;gap:18px;animation:clientMarqueeLeft 28s linear infinite}
 .client-marquee.reverse .client-marquee-track{animation-name:clientMarqueeRight;animation-duration:32s}
 .client-marquee:hover .client-marquee-track{animation-play-state:paused}
-.client-logo-item{min-width:170px;height:72px;padding:16px 24px;border:1px solid var(--line);background:#fff;display:flex;align-items:center;justify-content:center;color:#263449;font-size:13px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;white-space:nowrap}
-.client-logo-item img{max-width:125px;max-height:36px;object-fit:contain}
+.client-logo-item{min-width:320px;height:120px;padding:6px 20px;border:0;background:transparent;display:flex;align-items:center;justify-content:center;color:#263449;font-size:13px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;white-space:nowrap}
+.client-logo-item img{max-width:340px;max-height:110px;width:auto;height:auto;object-fit:contain;display:block}
+.client-logo-item .company-logo-image{max-width:340px;max-height:110px;width:auto;height:auto;object-fit:contain;display:block}
 @keyframes clientMarqueeLeft{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @keyframes clientMarqueeRight{from{transform:translateX(-50%)}to{transform:translateX(0)}}
 @media(max-width:850px){
 .work-results-track{grid-template-columns:1fr}
 .work-project-image{height:330px}
-.client-logo-item{min-width:145px;height:62px;padding:12px 18px;font-size:11px}
+.client-logo-item{min-width:260px;height:100px;padding:8px 16px;font-size:11px}
 }
 /* =========================================================
    STATEMENT
@@ -1737,6 +1757,24 @@ p{
     width:100%;
     height:100%;
     object-fit:cover;
+}
+
+.about-image-slideshow{
+    position:relative;
+}
+
+.about-image-slideshow .about-gallery-slide{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    opacity:0;
+    transition:opacity .35s ease;
+}
+
+.about-image-slideshow .about-gallery-slide.is-active{
+    opacity:1;
 }
 
 .about-copy{
@@ -2367,8 +2405,8 @@ footer{
     /* ---------- SERVICES ---------- */
 
     .services{
-        padding-top:clamp(60px, 10vw, 80px);
-        padding-bottom:clamp(35px, 8vw, 55px);
+        padding-top:clamp(52px, 9vw, 70px);
+        padding-bottom:clamp(28px, 6vw, 42px);
     }
 
     .services-title{
@@ -2398,8 +2436,8 @@ footer{
     /* ---------- GLIMPSE ---------- */
 
     .glimpse{
-        padding-top:clamp(35px, 8vw, 50px);
-        padding-bottom:clamp(55px, 11vw, 75px);
+        padding-top:clamp(32px, 7vw, 46px);
+        padding-bottom:clamp(28px, 6vw, 42px);
     }
 
     .glimpse-heading{
@@ -2521,7 +2559,8 @@ footer{
     /* ---------- APPROACH ---------- */
 
     .approach{
-        padding:clamp(65px, 11vw, 90px) 0;
+        padding-top:clamp(48px, 8vw, 65px);
+        padding-bottom:clamp(34px, 6vw, 46px);
     }
 
     .approach-grid{
@@ -2549,9 +2588,16 @@ footer{
     }
 
     .client-logo-item{
-        min-width:clamp(135px, 38vw, 170px);
-        height:clamp(58px, 17vw, 72px);
-        padding:12px 16px;
+        min-width:clamp(170px, 52vw, 210px);
+        height:clamp(68px, 20vw, 76px);
+        padding:6px 12px;
+        border:0;
+        background:transparent;
+    }
+
+    .client-logo-item img{
+        max-width:clamp(170px, 52vw, 210px);
+        max-height:72px;
     }
 
     .review-list{
@@ -2944,7 +2990,13 @@ h1, h2, h3, h4, h5, h6, p, a, button, label, blockquote{
 
     section{
         padding-top:clamp(72px, 8vw, 100px);
-        padding-bottom:clamp(72px, 8vw, 100px);
+        padding-bottom:clamp(54px, 6vw, 72px);
+    }
+
+    .services,
+    .glimpse,
+    .approach{
+        padding-bottom:clamp(50px, 6vw, 70px);
     }
 
     .hero-nav{
@@ -3138,6 +3190,10 @@ h1, h2, h3, h4, h5, h6, p, a, button, label, blockquote{
 
 /* Very small phones: no element should force a horizontal scroll. */
 @media (max-width:390px){
+    .services{padding-bottom:24px}
+    .glimpse{padding-bottom:24px}
+    .approach{padding-bottom:32px}
+
     .container{
         width:calc(100% - 28px);
     }
@@ -3280,6 +3336,17 @@ h1, h2, h3, h4, h5, h6, p, a, button, label, blockquote{
 }
 
 /* =========================================================
+   DYOLA — HERO HEADLINE LINE CONTROL
+   Keep each headline phrase on its own line at every viewport.
+   ========================================================= */
+.hero-title .hero-word{
+    display:block !important;
+    width:max-content;
+    max-width:100%;
+    white-space:nowrap;
+}
+
+/* =========================================================
    DYOLA — HERO REFERENCE POSITIONING
    Hero-only responsive composition. Existing UI/functionality
    remains unchanged outside the hero text area.
@@ -3317,6 +3384,18 @@ h1, h2, h3, h4, h5, h6, p, a, button, label, blockquote{
 }
 
 @media (max-width:850px){
+    .hero-title .hero-word{
+        display:block;
+        width:max-content;
+        max-width:100%;
+        white-space:nowrap;
+    }
+
+    .hero-title{
+        font-size:clamp(36px,11.8vw,60px);
+        letter-spacing:clamp(-2.8px,-.65vw,-1.8px);
+    }
+
     .hero-content{
         left:clamp(20px,6.5vw,28px);
         right:clamp(20px,6.5vw,28px);
@@ -3334,9 +3413,16 @@ h1, h2, h3, h4, h5, h6, p, a, button, label, blockquote{
     .hero-title{
         white-space:nowrap;
         margin-bottom:clamp(20px,5vw,30px);
-        font-size:clamp(48px,14vw,62px);
+        font-size:clamp(38px,12.5vw,62px);
         line-height:.9;
         letter-spacing:clamp(-3px,-.75vw,-1.8px);
+    }
+
+    .hero-title .hero-word{
+        display:block;
+        width:max-content;
+        max-width:100%;
+        white-space:nowrap;
     }
 
     .hero-description{
@@ -3352,8 +3438,15 @@ h1, h2, h3, h4, h5, h6, p, a, button, label, blockquote{
     }
 
     .hero-title{
-        font-size:clamp(43px,14vw,52px);
+        font-size:clamp(36px,12.5vw,48px);
         letter-spacing:-2.4px;
+    }
+
+    .hero-title .hero-word{
+        display:block;
+        width:max-content;
+        max-width:100%;
+        white-space:nowrap;
     }
 }
 
@@ -3375,92 +3468,48 @@ h1, h2, h3, h4, h5, h6, p, a, button, label, blockquote{
 
 
 /* =========================================================
-   DYOLA — HERO TEXT RESPONSIVE FIT (CODE CONTROLLED)
-   Keeps the existing hero composition; only text fitting changes.
-   ========================================================= */
-.hero-content{
-    width:min(850px,calc(100vw - 11vw));
-}
-
-.hero-title{
-    max-width:100%;
-    font-size:clamp(54px,7.2vw,110px);
-    line-height:.9;
-    letter-spacing:clamp(-5px,-.38vw,-2px);
-}
-
-.hero-description{
-    width:min(500px,100%);
-    font-size:clamp(13px,1.05vw,15px);
-    line-height:1.65;
-}
-
-@media(max-width:850px){
-    .hero-content{
-        width:auto;
-        max-width:none;
-    }
-
-    .hero-title{
-        white-space:normal;
-        font-size:clamp(40px,12.5vw,60px);
-        line-height:.92;
-        letter-spacing:clamp(-3px,-.55vw,-1.8px);
-    }
-
-    .hero-word{
-        white-space:nowrap;
-    }
-
-    .hero-description{
-        width:100%;
-        max-width:520px;
-        font-size:clamp(12px,3.25vw,14px);
-        line-height:1.6;
-    }
-}
-
-@media(max-width:390px){
-    .hero-content{
-        left:clamp(18px,5.5vw,24px);
-        right:clamp(18px,5.5vw,24px);
-    }
-
-    .hero-title{
-        font-size:clamp(37px,11.8vw,48px);
-        line-height:.94;
-        letter-spacing:-2px;
-    }
-
-    .hero-description{
-        font-size:12px;
-        line-height:1.55;
-    }
-}
-
-@media(max-width:850px) and (orientation:landscape){
-    .hero-title{
-        font-size:clamp(34px,7.5vw,52px);
-    }
-
-    .hero-description{
-        font-size:12px;
-    }
-}
-
-/* =========================================================
    RECENT JOBS — DYOLA WORK BILLBOARD
    ========================================================= */
 .recent-jobs-stage-wrap{position:relative;margin-top:32px}
 .recent-jobs-stage{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);grid-template-rows:repeat(2,minmax(0,1fr));gap:14px;min-height:clamp(520px,62vw,680px);overflow:visible}
-.recent-jobs-stage.is-changing .recent-job-card{transition:transform .9s cubic-bezier(.16,1,.3,1)}
-.recent-job-card{position:relative;display:block;min-width:0;min-height:0;overflow:hidden;background:#dfe3e8;cursor:pointer;will-change:transform}
+.recent-job-card{position:relative;display:block;min-width:0;min-height:0;overflow:hidden;background:#dfe3e8;cursor:pointer}
 .recent-job-card.giant{grid-column:1;grid-row:1 / 3}
 .recent-job-card.small-top{grid-column:2;grid-row:1}
 .recent-job-card.small-bottom{grid-column:2;grid-row:2}
 .recent-job-card .work-project-image{position:absolute;inset:0;width:100%;height:100%;overflow:hidden;background:#dfe3e8}
 .recent-job-card .work-project-image img,.recent-job-card .work-project-image video{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s ease}
 .recent-job-card:hover .work-project-image img,.recent-job-card:hover .work-project-image video{transform:scale(1.035)}
+/* Recent Jobs — small photography/design cards use directional swipe transitions.
+   The billboard positions themselves never move. */
+.recent-job-card.recent-swipe-left,
+.recent-job-card.recent-swipe-right,
+.recent-job-card.recent-swipe-up,
+.recent-job-card.recent-swipe-down{
+    animation-duration:.65s;
+    animation-timing-function:cubic-bezier(.16,1,.3,1);
+    animation-fill-mode:both;
+}
+.recent-job-card.recent-swipe-left{animation-name:recentSwipeLeft}
+.recent-job-card.recent-swipe-right{animation-name:recentSwipeRight}
+.recent-job-card.recent-swipe-up{animation-name:recentSwipeUp}
+.recent-job-card.recent-swipe-down{animation-name:recentSwipeDown}
+
+@keyframes recentSwipeLeft{
+    from{transform:translateX(-100%);opacity:.72}
+    to{transform:translateX(0);opacity:1}
+}
+@keyframes recentSwipeRight{
+    from{transform:translateX(100%);opacity:.72}
+    to{transform:translateX(0);opacity:1}
+}
+@keyframes recentSwipeUp{
+    from{transform:translateY(-100%);opacity:.72}
+    to{transform:translateY(0);opacity:1}
+}
+@keyframes recentSwipeDown{
+    from{transform:translateY(100%);opacity:.72}
+    to{transform:translateY(0);opacity:1}
+}
 .recent-job-card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,25,49,0) 45%,rgba(10,25,49,.78) 100%);pointer-events:none}
 .recent-job-card .recent-job-info{position:absolute;z-index:2;left:24px;right:24px;bottom:22px;color:#fff}
 .recent-job-card .recent-job-tag{font-size:9px;letter-spacing:1.6px;text-transform:uppercase;opacity:.82}
@@ -3592,399 +3641,744 @@ h1, h2, h3, h4, h5, h6, p, a, button, label, blockquote{
 
 
 
-/* =========================================================
-   CINEMATIC SECTION TRANSITIONS
-   Each new section enters upward from the bottom. The same
-   direction is used when going backward so the previous page
-   rises cleanly into view from below.
-   ========================================================= */
-
-.major-section-transitioning{
-    will-change:transform,opacity;
+html{
+    scroll-behavior:smooth;
 }
 
-.major-section-transitioning.dyola-transition-forward,
-.major-section-transitioning.dyola-transition-backward{
-    animation:dyolaSectionEnterUp .95s cubic-bezier(.22,.75,.2,1) both;
-}
-
-@keyframes dyolaSectionEnterUp{
-    from{
-        transform:translate3d(0,72px,0);
-        opacity:.92;
-    }
-    to{
-        transform:translate3d(0,0,0);
-        opacity:1;
-    }
-}
-
-.dyola-section-handoff-cue{
-    position:fixed;
-    left:50%;
-    bottom:24px;
-    z-index:9999;
-    display:flex;
-    align-items:center;
-    gap:9px;
-    padding:10px 14px;
-    border:1px solid rgba(245,247,250,.18);
-    border-radius:999px;
-    background:rgba(10,25,49,.88);
-    color:#F5F7FA;
-    font-size:11px;
-    letter-spacing:.08em;
-    text-transform:uppercase;
-    opacity:0;
-    transform:translate(-50%,12px);
-    pointer-events:none;
-    transition:opacity .2s ease, transform .2s ease;
-    backdrop-filter:blur(10px);
-}
-
-.dyola-section-handoff-cue.is-visible{
-    opacity:1;
-    transform:translate(-50%,0);
-}
-
-.dyola-section-handoff-arrow{
-    width:7px;
-    height:7px;
-    border-right:1px solid currentColor;
-    border-bottom:1px solid currentColor;
-    transform:rotate(45deg);
-}
-
-@media(max-width:850px){
-    .major-section-transitioning.dyola-transition-forward,
-    .major-section-transitioning.dyola-transition-backward{
-        animation-duration:.95s;
-    }
-}
-
-@media(prefers-reduced-motion:reduce){
-    .major-section-transitioning{
-        animation:none;
-        transform:none;
-        opacity:1;
-    }
-    .dyola-section-handoff-cue{
-        transition:none;
-    }
+/* Keep existing overlays above the page content. */
+.project-story,
+.clients-page,
+.mobile-menu{
+    z-index:1000;
 }
 
 
 /* =========================================================
-   RESPONSIVE SECTION SIZING — CONTENT DRIVEN
-   Sections grow from their content. No artificial viewport-height
-   floor is applied to normal content sections.
+   DYOLA — HERO + WHAT WE DO REFERENCE LAYOUT
+   Single-purpose visual update. Keeps existing functionality,
+   project data, Recent Jobs and the rest of the site intact.
    ========================================================= */
 
-:root{
-    --dyola-page-x:clamp(16px,4vw,72px);
-    --dyola-section-y:clamp(44px,6vw,96px);
-}
-
-/* Hero is intentionally full-screen by design. */
 .hero{
     min-height:100svh;
     height:100svh;
-    box-sizing:border-box;
+    background:#06101d;
 }
 
-/* Normal sections end after their content + intentional padding. */
-#services,
-#recent-jobs,
-.statement,
-#work,
-#approach,
-.trust,
-#about,
-#contact{
-    min-height:0;
-    height:auto;
-    box-sizing:border-box;
+.hero-background{
+    background:#06101d;
+    transform:scale(1.001);
+    overflow:hidden;
 }
 
-#services,
-#recent-jobs,
-.statement,
-#work,
-#approach,
-.trust,
-#about{
-    padding-block:var(--dyola-section-y);
+.hero-background video{
+    display:block;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center;
+    opacity:1 !important;
+    transition:none !important;
 }
 
-#services > .container,
-#recent-jobs > .container,
-.statement > .container,
-#work > .container,
-#approach > .container,
-.trust > .container,
-#about > .container{
-    width:min(calc(100% - (2 * var(--dyola-page-x))),1400px);
-    margin-inline:auto;
+.hero-background::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(90deg,rgba(6,16,29,.68),rgba(6,16,29,.26),rgba(6,16,29,.12));
+    pointer-events:none;
 }
 
-/* WHAT WE DO — DYOLA BLUE */
-#services{
-    background:#0A1931;
-    color:#F5F7FA;
+.hero-nav{
+    padding:clamp(22px,3.4vw,42px) clamp(24px,4vw,64px);
 }
 
-#services .kicker,
-#services .service-number,
-#services .services-title,
-#services .service-card h3,
-#services .service-card p{
-    color:#F5F7FA;
+.dyola-logo{
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    line-height:1;
 }
 
-#services .services-title span{
-    color:#B0B7C3 !important;
+.admin-style-logo{
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:clamp(30px,3.1vw,46px);
+    font-weight:400;
+    letter-spacing:-2.8px;
+    color:#fff;
 }
 
-#services .service-grid{
-    border-top-color:rgba(245,247,250,.22);
+.hero-logo-sub{
+    margin-top:2px;
+    margin-left:clamp(29px,2.7vw,40px);
+    font-size:7px;
+    letter-spacing:2.5px;
+    color:rgba(255,255,255,.88);
 }
 
-#services .service-card{
-    border-right-color:rgba(245,247,250,.22);
+.menu-button{
+    width:44px;
+    height:42px;
 }
 
-/* WHAT WE DO */
-#services .services-title{
-    font-size:clamp(38px,6.2vw,88px);
-    line-height:.94;
+.menu-button span,
+.menu-button::before,
+.menu-button::after{
+    width:40px;
+    height:2px;
+    background:#fff;
 }
 
-#services .service-grid{
-    margin-top:clamp(28px,4vw,56px);
+.menu-button::before{top:7px}
+.menu-button span{top:19px}
+.menu-button::after{top:31px}
+
+.hero-content{
+    left:clamp(28px,6.2vw,90px);
+    right:clamp(28px,6.2vw,90px);
+    bottom:clamp(100px,15vh,165px);
+    max-width:min(980px,72vw);
 }
 
-#services .service-card{
-    padding-block:clamp(22px,3vw,42px);
+.hero-eyebrow{
+    margin-bottom:clamp(18px,2.1vw,28px);
+    font-size:clamp(9px,.72vw,12px);
+    letter-spacing:clamp(2px,.24vw,3.5px);
+    color:rgba(255,255,255,.82);
 }
 
-#services .service-card h3{
-    font-size:clamp(20px,2vw,30px);
+.hero-title{
+    max-width:900px;
+    white-space:normal;
+    margin-bottom:clamp(22px,2.2vw,32px);
+    font-size:clamp(60px,7.1vw,108px);
+    line-height:.88;
+    letter-spacing:clamp(-5px,-.35vw,-3px);
 }
 
-#services .service-card p{
+.hero-description{
+    max-width:520px;
     font-size:clamp(12px,1vw,15px);
-    line-height:1.45;
+    line-height:1.55;
+    color:rgba(255,255,255,.86);
 }
 
-/* GLIMPSE / RECENT JOBS */
-#recent-jobs .glimpse-heading{
-    margin-bottom:clamp(18px,2.5vw,30px);
+.hero-actions{
+    display:flex;
+    align-items:stretch;
+    gap:18px;
+    margin-top:clamp(22px,2.4vw,32px);
 }
 
-#recent-jobs .glimpse-heading h2,
-#work .visual-work-heading h2,
-.trust h2,
-.trust .review-heading h2{
-    font-size:clamp(36px,6vw,82px);
-    line-height:.95;
+.hero-start-project{
+    margin-top:0;
 }
 
-#recent-jobs .glimpse-heading p,
-#work .visual-work-heading p{
-    font-size:clamp(12px,1.05vw,16px);
-    line-height:1.45;
+.hero-projects-button{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-height:58px;
+    padding:0 clamp(22px,2.4vw,34px);
+    border:1px solid rgba(255,255,255,.82);
+    color:#fff;
+    font-size:14px;
+    font-weight:600;
+    white-space:nowrap;
+    transition:background .25s ease,color .25s ease,transform .25s ease;
 }
 
-/* The billboard is media, so its height follows its width rather than
-   the viewport. */
-#recent-jobs .recent-jobs-stage{
-    min-height:0;
-    height:auto;
-    aspect-ratio:16 / 8.5;
+.hero-projects-button:hover{
+    background:#fff;
+    color:var(--navy);
+    transform:translateY(-2px);
 }
 
-/* SELECTED WORK */
-#work .visual-work-heading{
-    margin-bottom:clamp(18px,2.5vw,30px);
+.hero-scroll{
+    left:50%;
+    bottom:29px;
+    width:42px;
+    height:42px;
+    transform:translateX(-50%);
+    display:block;
+    color:#fff;
 }
 
-#work .visual-work-filters{
-    gap:clamp(6px,.7vw,12px);
-    margin-bottom:clamp(12px,2vw,22px);
-}
-
-#work .visual-work-filter{
-    padding:clamp(7px,.65vw,11px) clamp(10px,1vw,16px);
-    font-size:clamp(9px,.75vw,12px);
-}
-
-#work .visual-work-grid{
-    gap:clamp(10px,1.2vw,18px);
-}
-
-/* TRUSTED BY / REVIEWS */
-.trust .trust-grid > div + div{
-    margin-top:clamp(28px,4vw,60px);
-}
-
-.trust .client-marquee{
-    margin-top:clamp(14px,2.5vw,28px);
-}
-
-.trust .review-heading{
-    margin-bottom:clamp(12px,2vw,22px);
-}
-
-/* Keep the first review visible on the main page while the full review
-   list remains available through the existing View All Reviews control. */
-.trust .review-list{
-    max-height:none;
-    overflow:visible;
-}
-
-.trust .review-list .review-card:not(:first-child){
+.hero-scroll-line,
+.hero-scroll-text{
     display:none;
 }
 
-/* APPROACH */
-#approach{
-    padding-block:clamp(56px,7vw,96px);
+.hero-scroll-chevron{
+    position:absolute;
+    left:50%;
+    top:3px;
+    width:24px;
+    height:24px;
+    border-right:2px solid #fff;
+    border-bottom:2px solid #fff;
+    transform:translateX(-50%) rotate(45deg);
 }
 
-/* ABOUT */
-#about{
-    padding-block:clamp(56px,7vw,96px);
+.hero-scroll-chevron-two{
+    top:-8px;
+    opacity:.55;
 }
 
-/* FINAL CTA + LAST DETAILS remain one intentional final page. */
-#final-page{
-    min-height:100svh;
-    box-sizing:border-box;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
+.hero-section-transition{
+    position:absolute;
+    z-index:4;
+    left:-2%;
+    right:-2%;
+    bottom:-1px;
+    height:58px;
+    background:var(--navy);
+    clip-path:polygon(0 34%,42% 34%,48% 55%,50% 100%,52% 55%,58% 34%,100% 34%,100% 100%,0 100%);
+    pointer-events:none;
+}
+
+.services{
+    position:relative;
+    z-index:1;
+    margin-top:-1px;
+    padding-top:clamp(62px,7vw,105px);
+    padding-bottom:clamp(70px,7vw,105px);
     background:var(--navy);
     color:#fff;
 }
 
-#final-page #contact{
-    min-height:0;
-    height:auto;
-    flex:1 1 auto;
+/* The What We Do page begins directly in navy; do not let the section reveal
+   animation make its background briefly transparent/white on first load. */
+.services.reveal{
+    opacity:1;
+    transform:none;
+    filter:none;
+}
+
+.services .kicker{
+    color:rgba(255,255,255,.72);
+    margin-bottom:clamp(18px,2vw,25px);
+}
+
+.services-title{
+    max-width:900px;
+    color:#fff;
+    font-size:clamp(38px,4.3vw,64px);
+    line-height:.98;
+    letter-spacing:clamp(-2px,-.2vw,-3px);
+}
+
+.service-grid{
+    margin-top:clamp(38px,4.2vw,60px);
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:clamp(20px,2.6vw,38px);
+    border-top:0;
+}
+
+.service-card{
+    min-width:0;
+    padding:0;
+    border:0 !important;
+    color:#fff;
+}
+
+.service-image-wrap{
+    width:100%;
+    aspect-ratio:1.55 / 1;
+    overflow:hidden;
+    background:#132540;
+}
+
+.service-image{
+    width:100%;
+    height:100%;
+    background:#132540 center/cover no-repeat;
+    transition:transform .45s ease;
+}
+
+.service-card:hover .service-image{
+    transform:scale(1.035);
+}
+
+.service-meta{
     display:flex;
     align-items:center;
-    box-sizing:border-box;
-    padding-block:clamp(36px,5vw,72px);
+    gap:16px;
+    margin-top:17px;
+    color:rgba(255,255,255,.78);
+    font-size:11px;
+    letter-spacing:1.5px;
 }
 
-#final-page #contact .final-cta-row{
-    width:min(calc(100% - (2 * var(--dyola-page-x))),1400px);
-    margin-inline:auto;
+.service-meta-line{
+    display:block;
+    height:1px;
+    flex:1;
+    max-width:190px;
+    background:rgba(255,255,255,.45);
 }
 
-#final-page footer{
-    flex:0 0 auto;
+.service-card h3{
+    margin:14px 0 9px;
+    color:#fff;
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:clamp(24px,2vw,32px);
+    line-height:1.05;
+    font-weight:400;
 }
 
-/* MOBILE */
+.service-card p{
+    max-width:none;
+    margin:0;
+    color:rgba(255,255,255,.76);
+    font-size:clamp(12px,.95vw,14px);
+    line-height:1.55;
+}
+
+.service-link{
+    margin-top:24px;
+    color:#fff;
+    font-size:11px;
+    letter-spacing:1.5px;
+    text-transform:none;
+    gap:14px;
+}
+
+.service-link span{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:48px;
+    height:48px;
+    border:1px solid rgba(255,255,255,.55);
+    border-radius:50%;
+    font-size:18px;
+    letter-spacing:0;
+}
+
+@media(max-width:1100px) and (min-width:851px){
+    .service-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+    .service-card{padding-bottom:20px;}
+    .hero-content{max-width:78vw;}
+}
+
 @media(max-width:850px){
-    :root{
-        --dyola-page-x:clamp(16px,5vw,28px);
-        --dyola-section-y:clamp(36px,7vw,60px);
+    .hero-nav{
+        padding:22px clamp(18px,5.5vw,30px);
     }
 
-    #services,
-    #recent-jobs,
-    .statement,
-    #work,
-    #approach,
-    .trust,
-    #about{
-        padding-block:var(--dyola-section-y);
+    .admin-style-logo{
+        font-size:clamp(28px,8vw,38px);
+        letter-spacing:-2px;
     }
 
-    #services .services-title{
-        font-size:clamp(34px,9vw,58px);
-        line-height:.96;
+    .hero-logo-sub{
+        margin-left:clamp(27px,7vw,34px);
+        font-size:6px;
+        letter-spacing:2px;
     }
 
-    #services .service-grid{
-        margin-top:clamp(22px,5vw,34px);
+    .menu-button{
+        width:42px;
     }
 
-    #services .service-card{
-        padding-block:clamp(16px,4vw,26px);
+    .menu-button span,
+    .menu-button::before,
+    .menu-button::after{
+        width:38px;
     }
 
-    #services .service-card h3{
-        font-size:clamp(18px,4.7vw,27px);
+    .hero-content{
+        left:clamp(20px,6.5vw,30px);
+        right:clamp(20px,6.5vw,30px);
+        bottom:clamp(78px,12svh,110px);
+        max-width:none;
     }
 
-    #services .service-card p{
-        font-size:clamp(11px,3.1vw,14px);
+    .hero-eyebrow{
+        margin-bottom:clamp(17px,4vw,23px);
+        font-size:clamp(8px,2.2vw,10px);
+        letter-spacing:clamp(1.7px,.55vw,2.5px);
+    }
+
+    .hero-title{
+        margin-bottom:clamp(20px,5vw,28px);
+        font-size:clamp(45px,12.7vw,66px);
+        line-height:.91;
+        letter-spacing:clamp(-3px,-.7vw,-2px);
+    }
+
+    .hero-description{
+        max-width:520px;
+        font-size:clamp(11px,3.15vw,14px);
+    }
+
+    .hero-actions{
+        gap:10px;
+        margin-top:clamp(20px,5vw,28px);
+    }
+
+    .hero-actions .white-button,
+    .hero-projects-button{
+        min-height:52px;
+        flex:1 1 0;
+        min-width:0;
+        padding:0 12px;
+        font-size:clamp(11px,3vw,14px);
+    }
+
+    .hero-projects-button{
+        text-align:center;
+    }
+
+    .hero-section-transition{
+        height:50px;
+        clip-path:polygon(0 25%,42% 25%,48% 48%,50% 100%,52% 48%,58% 25%,100% 25%,100% 100%,0 100%);
+    }
+
+    .hero-scroll{
+        bottom:25px;
+    }
+
+    .services{
+        padding-top:clamp(52px,10vw,72px);
+        padding-bottom:clamp(28px,6vw,44px);
+    }
+
+    .services-title{
+        max-width:100%;
+        font-size:clamp(36px,9.2vw,52px);
+        line-height:1.02;
+    }
+
+    .service-grid{
+        margin-top:clamp(34px,8vw,48px);
+        grid-template-columns:1fr;
+        gap:0;
+    }
+
+    .service-card{
+        display:grid;
+        grid-template-columns:minmax(0,46%) minmax(0,1fr);
+        column-gap:clamp(18px,5vw,32px);
+        padding:0 0 clamp(18px,5vw,28px);
+        margin-bottom:clamp(18px,5vw,28px);
+        border-bottom:1px solid rgba(255,255,255,.22) !important;
+    }
+
+    .service-card:last-child{
+        border-bottom:0 !important;
+        margin-bottom:0;
+        padding-bottom:0;
+    }
+
+    .service-image-wrap{
+        grid-column:1;
+        grid-row:1 / span 4;
+        aspect-ratio:1.28 / 1;
+        border-radius:9px;
+    }
+
+    .service-meta{
+        grid-column:2;
+        grid-row:1;
+        margin-top:0;
+        gap:11px;
+        font-size:10px;
+    }
+
+    .service-meta-line{
+        max-width:95px;
+    }
+
+    .service-card h3{
+        grid-column:2;
+        grid-row:2;
+        margin:12px 0 7px;
+        font-size:clamp(23px,6.2vw,31px);
+        line-height:1.02;
+    }
+
+    .service-card p{
+        grid-column:2;
+        grid-row:3;
+        font-size:clamp(11px,3.25vw,14px);
         line-height:1.45;
     }
 
-    #recent-jobs .glimpse-heading h2,
-    #work .visual-work-heading h2,
-    .trust h2,
-    .trust .review-heading h2{
-        font-size:clamp(32px,8vw,58px);
-        line-height:.96;
+    .service-link{
+        grid-column:2;
+        grid-row:4;
+        margin-top:13px;
+        font-size:10px;
+        gap:10px;
     }
 
-    #recent-jobs .glimpse-heading p,
-    #work .visual-work-heading p{
-        font-size:clamp(12px,3.2vw,15px);
-        line-height:1.5;
-    }
-
-    #recent-jobs .recent-jobs-stage{
-        aspect-ratio:1.35 / 1;
-    }
-
-    #work .visual-work-grid{
-        gap:clamp(8px,2vw,14px);
-    }
-
-    #approach,
-    #about{
-        padding-block:clamp(44px,8vw,64px);
-    }
-
-    #final-page{
-        min-height:100svh;
-    }
-
-    #final-page #contact{
-        padding-block:clamp(32px,7vw,52px);
-    }
-
-    #final-page #contact .final-cta-row{
-        width:min(calc(100% - (2 * var(--dyola-page-x))),900px);
-        flex-direction:column;
-        align-items:flex-start;
-        gap:clamp(18px,4vw,28px);
-    }
-
-    #final-page .footer-top{
-        gap:clamp(22px,5vw,34px);
+    .service-link span{
+        width:40px;
+        height:40px;
+        font-size:16px;
     }
 }
 
-/* Short screens: reduce padding, never create a viewport-sized floor. */
-@media(max-height:700px){
-    :root{
-        --dyola-section-y:clamp(28px,5vw,44px);
+@media(max-width:359px){
+    .hero-title{font-size:clamp(41px,12.4vw,48px);}
+    .hero-actions{flex-direction:column;}
+    .hero-actions .white-button,
+    .hero-projects-button{width:100%;}
+    .service-card{grid-template-columns:minmax(0,43%) minmax(0,1fr);column-gap:14px;}
+    .service-card h3{font-size:22px;}
+}
+
+
+/* User-requested Hero video clarity: show the actual video without a dark overlay. */
+.hero::after,
+.hero-background::after{
+    display:none !important;
+    content:none !important;
+}
+
+/* Hero headline: keep each phrase together at every viewport width. */
+@media (max-width: 600px){
+    .hero-title{
+        font-size:clamp(40px,13vw,58px);
+        letter-spacing:-2.5px;
+        line-height:.9;
     }
 
-    #services .service-card{
-        padding-block:clamp(14px,2.5vw,20px);
+    .hero-word{
+        width:max-content;
+        max-width:100%;
+        white-space:nowrap;
+    }
+}
+
+/* LOCKED HERO DOWN ARROW ANIMATION */
+.hero-scroll-chevron{
+    animation:dyolaArrowDown 1.6s ease-in-out infinite;
+}
+.hero-scroll-chevron-two{
+    animation-delay:.25s;
+}
+@keyframes dyolaArrowDown{
+    0%,100%{transform:translateX(-50%) rotate(45deg) translate(0,0);}
+    50%{transform:translateX(-50%) rotate(45deg) translate(5px,5px);}
+}
+
+
+/* LOCKED WHAT WE DO — Learn More controls remain removed. */
+#services .service-link{display:none !important;}
+
+
+/* =========================================================
+   FINAL RESPONSIVE HARDENING
+   Same UI/design — only sizing, containment and overflow.
+   Hero remains intentionally viewport-height.
+   ========================================================= */
+
+html,
+body{
+    width:100%;
+    max-width:100%;
+    overflow-x:hidden;
+}
+
+*,
+*::before,
+*::after{
+    box-sizing:border-box;
+}
+
+/* Main public sections should be content-driven, not viewport-driven. */
+.services,
+.glimpse,
+.statement,
+.work-explorer,
+.approach,
+.trust,
+#about,
+.final-cta,
+footer{
+    height:auto;
+    min-height:0;
+}
+
+/* Keep intentional media dimensions controlled by their containers. */
+.service-image-wrap,
+.glimpse-card,
+.project-image,
+.work-project-image,
+.about-image{
+    max-width:100%;
+}
+
+/* ---------- 320px–850px ---------- */
+@media (max-width:850px){
+
+    .container{
+        width:calc(100% - clamp(28px,8vw,40px));
+        max-width:1180px;
+        margin-left:auto;
+        margin-right:auto;
     }
 
-    #recent-jobs .glimpse-heading,
-    #work .visual-work-heading{
-        margin-bottom:clamp(12px,2vw,22px);
+    .services,
+    .glimpse,
+    .statement,
+    .work-explorer,
+    .approach,
+    .trust,
+    #about,
+    .final-cta{
+        height:auto;
+        min-height:0;
+    }
+
+    .services-title,
+    .glimpse-heading h2,
+    .statement h2,
+    .approach h2,
+    .about-copy h2,
+    .final-cta h2{
+        max-width:100%;
+        overflow-wrap:anywhere;
+    }
+
+    .service-grid,
+    .steps,
+    .review-list,
+    .statement-grid,
+    .approach-grid,
+    .trust-grid,
+    .about-grid,
+    .final-cta-row{
+        min-width:0;
+        max-width:100%;
+    }
+
+    .service-card,
+    .step,
+    .review-card{
+        min-width:0;
+        max-width:100%;
+    }
+
+    .service-card p,
+    .step p,
+    .review-card blockquote,
+    .about-copy p{
+        max-width:100%;
+        overflow-wrap:anywhere;
+    }
+
+    .project-image,
+    .work-project-image,
+    .about-image{
+        width:100%;
+        max-width:100%;
+    }
+
+    /* The Recent Jobs billboard intentionally keeps its established
+       composition; only its width is constrained to the viewport. */
+    .recent-jobs-stage-wrap,
+    .recent-jobs-stage{
+        width:100%;
+        max-width:100%;
+    }
+
+    /* Internal carousels may scroll intentionally, but never enlarge
+       the document itself. */
+    .glimpse-track,
+    .work-main-tabs,
+    .work-sub-tabs{
+        max-width:100%;
+    }
+}
+
+/* ---------- Very small phones: 320px–390px ---------- */
+@media (max-width:390px){
+
+    .container{
+        width:calc(100% - 28px);
+    }
+
+    .services{
+        padding-top:clamp(48px,10vw,62px);
+        padding-bottom:clamp(24px,6vw,36px);
+    }
+
+    .glimpse{
+        padding-top:clamp(30px,8vw,42px);
+        padding-bottom:clamp(42px,10vw,58px);
+    }
+
+    .approach{
+        padding-top:clamp(50px,10vw,65px);
+        padding-bottom:clamp(50px,10vw,65px);
+    }
+
+    .service-card,
+    .step,
+    .review-card{
+        min-width:0;
+    }
+
+    .hero-actions{
+        width:100%;
+        max-width:100%;
+    }
+
+    .hero-actions > *{
+        min-width:0;
+        max-width:100%;
+    }
+
+    .recent-jobs-stage{
+        width:100%;
+        max-width:100%;
+    }
+}
+
+/* ---------- 851px–1199px tablets / small laptops ---------- */
+@media (min-width:851px) and (max-width:1199px){
+
+    .container{
+        width:calc(100% - clamp(40px,6vw,56px));
+        max-width:1100px;
+    }
+
+    .services,
+    .glimpse,
+    .statement,
+    .work-explorer,
+    .approach,
+    .trust,
+    #about,
+    .final-cta{
+        height:auto;
+        min-height:0;
+    }
+}
+
+/* ---------- Large desktop ---------- */
+@media (min-width:1200px){
+
+    .container{
+        width:min(1180px,calc(100% - 96px));
+    }
+
+    .services,
+    .glimpse,
+    .statement,
+    .work-explorer,
+    .approach,
+    .trust,
+    #about,
+    .final-cta{
+        height:auto;
+        min-height:0;
     }
 }
 
@@ -4050,85 +4444,39 @@ h1, h2, h3, h4, h5, h6, p, a, button, label, blockquote{
 
     <div class="hero-background"></div>
 
-
     <header class="hero-nav">
-
-        <a
-            href="#"
-            class="dyola-logo"
-            aria-label="DyOla">
-
+        <a href="#" class="dyola-logo" aria-label="DyOla">
             <span class="admin-style-logo">DyOla</span>
-
+            <span class="hero-logo-sub">FILMS</span>
         </a>
 
-
-        <button
-            class="menu-button"
-            id="openMenu"
-            aria-label="Open menu">
-
+        <button class="menu-button" id="openMenu" aria-label="Open menu">
             <span></span>
-
         </button>
-
     </header>
 
-
     <div class="hero-content">
-
-        <div class="hero-eyebrow">
-
-            STRATEGIC VISUAL PRODUCTION
-
-        </div>
-
+        <div class="hero-eyebrow">STRATEGIC VISUAL PRODUCTION</div>
 
         <h1 class="hero-title">
-
-            <span class="hero-word">
-                GET SEEN.
-            </span>
-
-            <br>
-
-            <span class="hero-word">
-                GET TRUSTED.
-            </span>
-
-            <br>
-
-            <span class="hero-word">
-                GET CHOSEN.
-            </span>
-
+            <span class="hero-word">GET SEEN.</span>
+            <span class="hero-word">GET TRUSTED.</span>
+            <span class="hero-word">GET CHOSEN.</span>
         </h1>
 
+        <div class="hero-actions">
+            <button class="white-button js-start-project hero-start-project">Start a Project →</button>
 
-        <p class="hero-description">
-
-            We create strategic visual content that
-            helps businesses communicate their value.
-
-        </p>
-
-        <button
-            class="white-button js-start-project hero-start-project">
-
-            Start a Project →
-
-        </button>
-
+            <a class="hero-projects-button" href="#work">View Our Work →</a>
+        </div>
     </div>
 
-
-    <div class="hero-scroll">
-        <span class="hero-scroll-line"></span>
-        <span class="hero-scroll-text">
-            Scroll<br>
-            to explore
-        </span>
+    <div class="hero-scroll" aria-hidden="true">
+        <span class="hero-scroll-chevron"></span>
+        <span class="hero-scroll-chevron hero-scroll-chevron-two"></span>
     </div>
+
+    <div class="hero-section-transition" aria-hidden="true"></div>
 
 </section>
 
@@ -4143,75 +4491,43 @@ h1, h2, h3, h4, h5, h6, p, a, button, label, blockquote{
 
     <div class="container">
 
-        <div class="kicker">
-            What we do
-        </div>
-
+        <div class="kicker">WHAT WE DO</div>
 
         <h2 class="services-title">
-
-            What we create.<br>
-
-            <span style="color:#8792a1">
-                How we help it reach.
-            </span>
-
+            We create the visual tools<br>
+            your business needs to get seen,<br>
+            trusted and chosen.
         </h2>
-
 
         <div class="service-grid reveal-stagger">
 
-
-            <article class="service-card">
-
-                <div class="service-number">
-                    01
-                </div>
-
-                <h3>
-                    Strategic Visual Production
-                </h3>
-
-                <p>
-                    Commercials, brand films, social content, documentaries and more — created around what your audience needs to understand.
-                </p>
-
+            <article class="service-card" data-service="video">
+                <div class="service-image-wrap"><div class="service-image" aria-hidden="true"></div></div>
+                <div class="service-meta"><span>01</span><span class="service-meta-line"></span></div>
+                <h3>Video Production</h3>
+                <p>Show your value, build trust and give people a reason to remember your business.</p>
             </article>
 
-
-            <article class="service-card">
-
-                <div class="service-number">
-                    02
-                </div>
-
-                <h3>
-                    Photography &amp; Design
-                </h3>
-
-                <p>
-                    Product, people, property and project photography, plus design for a consistent brand presence.
-                </p>
-
+            <article class="service-card" data-service="photography">
+                <div class="service-image-wrap"><div class="service-image" aria-hidden="true"></div></div>
+                <div class="service-meta"><span>02</span><span class="service-meta-line"></span></div>
+                <h3>Photography</h3>
+                <p>Make your products, properties and people look as valuable as they really are.</p>
             </article>
 
-
-            <article class="service-card">
-
-                <div class="service-number">
-                    03
-                </div>
-
-                <h3>
-                    Targeted Advertising
-                </h3>
-
-                <p>
-                    We put your content in front of the right audience through targeted campaigns built around the people you want to reach.
-                </p>
-
+            <article class="service-card" data-service="graphics">
+                <div class="service-image-wrap"><div class="service-image" aria-hidden="true"></div></div>
+                <div class="service-meta"><span>03</span><span class="service-meta-line"></span></div>
+                <h3>Graphics &amp; Design</h3>
+                <p>Turn your ideas into clear visuals people can understand, recognize and remember.</p>
             </article>
 
+            <article class="service-card" data-service="advertising">
+                <div class="service-image-wrap"><div class="service-image" aria-hidden="true"></div></div>
+                <div class="service-meta"><span>04</span><span class="service-meta-line"></span></div>
+                <h3>Targeted Advertising</h3>
+                <p>Put the right message in front of the people your business wants to reach.</p>
+            </article>
 
         </div>
 
@@ -4235,7 +4551,7 @@ h1, h2, h3, h4, h5, h6, p, a, button, label, blockquote{
                 </div>
 
                 <h2>
-                    What we create.
+                    A glimpse of our work
                 </h2>
             </div>
 
@@ -4596,14 +4912,6 @@ h1, h2, h3, h4, h5, h6, p, a, button, label, blockquote{
                 DyOla is a creative production and advertising company that helps brands get seen, trusted &amp; chosen through strategic visual production and targeted advertising.
             </p>
 
-            <a
-                href="#contact"
-                class="outline-button">
-
-                Learn More →
-
-            </a>
-
         </div>
 
 
@@ -4611,8 +4919,6 @@ h1, h2, h3, h4, h5, h6, p, a, button, label, blockquote{
 
 </section>
 
-
-<div class="final-page" id="final-page">
 
 <!-- =======================================================
      FINAL CTA
@@ -4790,9 +5096,6 @@ h1, h2, h3, h4, h5, h6, p, a, button, label, blockquote{
     </div>
 
 </footer>
-
-</div>
-
 
 
 <!-- =======================================================
@@ -5689,6 +5992,32 @@ serviceOptions.forEach(function(option){
 
 
 /* =========================================================
+   SERVICE PAGE -> EXISTING PROJECT ENQUIRY HANDOFF
+   ========================================================= */
+(function(){
+    const params = new URLSearchParams(window.location.search);
+    if(params.get("openProject") !== "1") return;
+
+    const requestedService = params.get("service");
+
+    resetProjectForm();
+
+    if(requestedService){
+        const match = Array.from(serviceOptions).find(function(option){
+            return option.dataset.service === requestedService;
+        });
+
+        if(match){
+            match.classList.add("selected");
+            selectedService.value = requestedService;
+        }
+    }
+
+    openProjectModal();
+})();
+
+
+/* =========================================================
    REFERRAL SOURCE
    ========================================================= */
 
@@ -5758,9 +6087,9 @@ const supabaseClient =
    ========================================================= */
 
 const PUBLIC_SECTION_MAP = {
-    "Hero": {section: ".hero", heading: ".hero-title", text: ".hero-description"},
-    "What We Do": {section: "#services", heading: ".services-title", text: null},
-    "Glimpse of Our Work": {section: ".glimpse", heading: ".glimpse-heading h2", text: ".glimpse-heading p"},
+    "Hero": {section: ".hero", heading: null, text: null},
+    "What We Do": {section: "#services", heading: null, text: null},
+    "Glimpse of Our Work": {section: ".glimpse", heading: null, text: ".glimpse-heading p"},
     "Selected Work": {section: "#work", heading: ".work-explorer-heading h2", text: ".work-explorer-heading p"},
     "Big Statement": {section: ".statement", heading: ".statement h2", text: ".statement-copy p"},
     "Our Approach": {section: "#approach", heading: ".approach h2", text: null},
@@ -5813,7 +6142,24 @@ function applySectionBackground(section,media){
                 video.style.objectFit = "cover";
                 video.style.position = "absolute";
                 video.style.inset = "0";
+                video.preload = "auto";
+                video.setAttribute("playsinline", "");
+                video.style.opacity = "1";
+                video.style.transition = "none";
+
                 background.appendChild(video);
+
+                const startHeroVideo = function(){
+                    video.play().catch(function(){});
+                };
+
+                if(video.readyState >= 2){
+                    startHeroVideo();
+                }else{
+                    video.addEventListener("canplay",startHeroVideo,{once:true});
+                }
+
+                startHeroVideo();
             }
         }else{
             background.style.backgroundImage = `url("${media.url}")`;
@@ -5855,10 +6201,42 @@ function applySectionMedia(sectionKey,mediaItems){
     if(sectionKey === "About DyOla"){
         const target = document.querySelector(".about-image");
         if(!target) return;
-        const element = createSectionMediaElement(mediaItems[0],"DyOla creative production");
-        if(element){
-            target.innerHTML = "";
-            target.appendChild(element);
+
+        const images = mediaItems
+            .filter(media=>{
+                const type = String(media.type || "").toLowerCase();
+                return !type.includes("video") && !/\.(mp4|webm|mov)(\?|$)/i.test(media.url || "");
+            })
+            ;
+
+        if(!images.length) return;
+
+        target.innerHTML = "";
+        target.classList.add("about-image-slideshow");
+
+        const slides = images.map((media,index)=>{
+            const img = document.createElement("img");
+            img.src = media.url;
+            img.alt = "DyOla behind the scenes";
+            img.loading = "eager";
+            img.decoding = "async";
+            img.className = "about-gallery-slide" + (index === 0 ? " is-active" : "");
+            target.appendChild(img);
+            return img;
+        });
+
+        const previousTimer = target.__dyolaAboutTimer;
+        if(previousTimer) clearInterval(previousTimer);
+        target.__dyolaAboutTimer = null;
+
+        if(slides.length > 1){
+            let index = 0;
+            target.__dyolaAboutTimer = setInterval(function(){
+                const current = slides[index];
+                index = (index + 1) % slides.length;
+                current.classList.remove("is-active");
+                slides[index].classList.add("is-active");
+            },2000);
         }
     }
 }
@@ -5866,27 +6244,48 @@ function applySectionMedia(sectionKey,mediaItems){
 
 
 function applyPublicSectionContent(item){
-    // Hero copy and the Big Statement copy are intentionally code-controlled.
-    // Their text must not be overwritten by the admin website_sections table.
-    if(item.section_key === "Hero" || item.section_key === "Big Statement") return;
-
     const config = PUBLIC_SECTION_MAP[item.section_key];
     if(!config) return;
 
     const section = document.querySelector(config.section);
     if(!section) return;
 
-    if(config.heading){
-        const heading = section.querySelector(config.heading);
-        if(heading && item.heading) heading.textContent = item.heading;
-    }
+    // Hero composition is locked in code. Admin website_sections must never
+    // replace its separate headline spans or supporting copy.
+    if(item.section_key !== "Hero"){
+        if(config.heading){
+            const heading = section.querySelector(config.heading);
+            if(heading && item.heading) heading.textContent = item.heading;
+        }
 
-    if(config.text){
-        const text = section.querySelector(config.text);
-        if(text && item.text) text.textContent = item.text;
+        if(config.text){
+            const text = section.querySelector(config.text);
+            if(text && item.text) text.textContent = item.text;
+        }
     }
 
     section.style.display = item.visible === false ? 'none' : '';
+}
+
+async function dyolaLoadAboutGalleryFallback(){
+    try{
+        const result=await supabaseClient
+            .from("media")
+            .select("id,name,type,folder,url,r2_key,created_at")
+            .eq("folder","About")
+            .order("created_at",{ascending:false});
+        if(result.error){
+            console.error("Could not load About gallery fallback:",result.error);
+            return [];
+        }
+        return (result.data||[]).filter(function(media){
+            const type=String(media.type||"").toLowerCase();
+            return media.url && !type.includes("video") && !/\.(mp4|webm|mov)(\?|$)/i.test(media.url);
+        });
+    }catch(error){
+        console.error("Could not load About gallery fallback:",error);
+        return [];
+    }
 }
 
 async function loadPublicWebsiteContent(){
@@ -5937,7 +6336,24 @@ async function loadPublicWebsiteContent(){
                 .map(id=>mediaById[id])
                 .filter(media=>media && media.url);
 
-            applySectionMedia(item.section_key,selectedMedia);
+            if(item.section_key === "About DyOla"){
+                // Always combine the section-selected images with the full About gallery.
+                // This prevents a single media_id in website_sections from locking the
+                // About image to one photo.
+                dyolaLoadAboutGalleryFallback().then(function(fallbackMedia){
+                    const combined = [];
+                    const seen = new Set();
+                    [...selectedMedia, ...fallbackMedia].forEach(function(media){
+                        const key = media.id || media.url;
+                        if(!key || seen.has(key)) return;
+                        seen.add(key);
+                        combined.push(media);
+                    });
+                    applySectionMedia(item.section_key,combined);
+                });
+            }else{
+                applySectionMedia(item.section_key,selectedMedia);
+            }
         });
     }catch(error){
         console.error("Could not load website content:",error);
@@ -5945,6 +6361,18 @@ async function loadPublicWebsiteContent(){
 }
 
 loadPublicWebsiteContent();
+
+function enforceDyolaHeroLock(){
+    const heroTitle=document.querySelector(".hero-title");
+    if(heroTitle){
+        heroTitle.innerHTML='<span class="hero-word">GET SEEN.</span><span class="hero-word">GET TRUSTED.</span><span class="hero-word">GET CHOSEN.</span>';
+    }
+}
+
+/* LOCKED HERO CONTENT — Supabase may control other section text, but never the Hero composition. */
+(function lockHeroComposition(){
+    enforceDyolaHeroLock();
+})();
 
 
 /* =========================================================
@@ -5981,6 +6409,22 @@ function escapeHtml(value){
         .replace(/'/g,"&#039;");
 }
 
+function publicProjectVideo(project,mediaItems){
+    const title = String(project?.title || "").toLowerCase().trim();
+    const slug = String(project?.slug || "").toLowerCase().trim();
+    const match = (mediaItems || []).find(function(media){
+        const type = String(media?.type || "").toLowerCase();
+        const url = String(media?.url || "");
+        const isVideo = type.includes("video") || /\.(mp4|webm|mov)(\?|$)/i.test(url);
+        if(!isVideo || !url) return false;
+        const name = String(media?.name || "").toLowerCase().trim();
+        const folder = String(media?.folder || "").toLowerCase().trim();
+        return (title && name.includes(title)) || (slug && name.includes(slug)) ||
+               (title && folder.includes(title)) || (slug && folder.includes(slug));
+    });
+    return match?.url || "";
+}
+
 function renderPublicProjects(projects,mediaItems){
     const track = document.getElementById("workResults");
     if(!track) return;
@@ -5990,6 +6434,12 @@ function renderPublicProjects(projects,mediaItems){
         const industry = projectIndustry(project);
         const tag = project.category || project.subcategory || "Project";
         const image = project.cover_image || "";
+        const videoUrl = publicProjectVideo(project,mediaItems);
+        const mediaHtml = videoUrl
+            ? `<video src="${escapeHtml(videoUrl)}" muted loop autoplay playsinline preload="auto" aria-label="${escapeHtml(project.title || "DyOla project")}"></video>`
+            : (image
+                ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(project.title || "DyOla project")}" loading="lazy">`
+                : `<div class="project-story-placeholder-media"></div>`);
 
         return `<article class="visual-work-card has-arrow"
             data-project-id="${escapeHtml(project.id)}"
@@ -5997,7 +6447,7 @@ function renderPublicProjects(projects,mediaItems){
             tabindex="0"
             role="button"
             aria-label="Open ${escapeHtml(project.title || "project")}">
-            ${image ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(project.title || "DyOla project")}" loading="lazy">` : `<div class="project-story-placeholder-media"></div>`}
+${mediaHtml}
             <div class="visual-work-card-copy">
                 <h3 class="visual-work-card-title">${escapeHtml(project.title || "Untitled Project")}</h3>
                 <div class="visual-work-card-meta">${escapeHtml(tag)}</div>
@@ -6042,6 +6492,47 @@ function renderPublicProjects(projects,mediaItems){
     });
 
     filterVisualWork(activeIndustry);
+    forceDyolaAutoplay(track);
+}
+
+function hydrateServiceReferenceImages(projects){
+    const cards = Array.from(document.querySelectorAll(".service-card[data-service]"));
+    if(!cards.length) return;
+
+    const list = Array.isArray(projects) ? projects.filter(function(project){
+        return project && project.cover_image;
+    }) : [];
+
+    function findByType(type){
+        return list.find(function(project){
+            const value = String(project.category || project.subcategory || "").toLowerCase();
+            if(type === "video") return value.includes("video") || value.includes("film") || value.includes("commercial");
+            if(type === "photography") return value.includes("photo");
+            if(type === "graphics") return value.includes("graphic") || value.includes("design");
+            return false;
+        });
+    }
+
+    const used = new Set();
+    cards.forEach(function(card){
+        const type = card.dataset.service;
+        let project = findByType(type);
+
+        if(project && used.has(project.id)) project = null;
+        if(project) used.add(project.id);
+
+        if(!project && type === "advertising"){
+            project = list.find(function(item){ return !used.has(item.id) && item.featured; }) || list.find(function(item){ return !used.has(item.id); });
+            if(project) used.add(project.id);
+        }
+
+        if(!project) return;
+
+        const image = card.querySelector(".service-image");
+        if(!image) return;
+
+        image.style.backgroundImage = `url("${String(project.cover_image).replace(/"/g,'\\"')}")`;
+    });
 }
 
 async function loadPublicProjects(){
@@ -6080,6 +6571,8 @@ async function loadPublicProjects(){
             window.dyolaMedia
         );
 
+        hydrateServiceReferenceImages(window.dyolaProjects);
+
     }catch(error){
 
         console.error(
@@ -6099,10 +6592,15 @@ loadPublicProjects();
 const recentJobsStage = document.getElementById("recentJobsStage");
 const recentJobsDots = document.getElementById("recentJobsDots");
 
-let recentJobStages = [];
+let recentJobStages = {videos:[],lower:[]};
 let recentJobStageIndex = 0;
+let recentJobSmallTopIndex = 0;
+let recentJobSmallBottomIndex = 1;
 let recentJobTimer = null;
+let recentJobSmallTimer = null;
 let recentJobMedia = [];
+let recentJobSwipeDirectionIndex = 0;
+const recentJobSwipeDirections = ["left","right","up","down"];
 
 function recentJobCategory(project){
     const value = `${project?.category || ""} ${project?.subcategory || ""}`.toLowerCase();
@@ -6144,23 +6642,56 @@ function recentJobMediaForProject(project){
     }) || null;
 }
 
-function recentJobCover(project){
-    if(project?.cover_image){
-        return {url:project.cover_image,type:"image"};
-    }
+function recentJobVideoForProject(project){
+    const title = String(project?.title || "").toLowerCase().trim();
+    const slug = String(project?.slug || "").toLowerCase().trim();
+    const match = recentJobMedia.find(function(media){
+        const type = String(media?.type || "").toLowerCase();
+        const url = String(media?.url || "");
+        const isVideo = type.includes("video") || /\.(mp4|webm|mov)(\?|$)/i.test(url);
+        if(!isVideo || !url) return false;
+        const name = String(media?.name || "").toLowerCase().trim();
+        const folder = String(media?.folder || "").toLowerCase().trim();
+        return (title && name.includes(title)) || (slug && name.includes(slug)) ||
+               (title && folder.includes(title)) || (slug && folder.includes(slug));
+    });
+    return match?.url || "";
+}
 
+function recentJobCover(project){
+    const videoUrl = recentJobVideoForProject(project);
+    if(videoUrl) return {url:videoUrl,type:"video"};
+    if(project?.cover_image) return {url:project.cover_image,type:"image"};
     const media = recentJobMediaForProject(project);
     if(media?.url){
         const type = String(media.type || "").toLowerCase();
         const isVideo = type.includes("video") || /\.(mp4|webm|mov)(\?|$)/i.test(String(media.url));
         return {url:media.url,type:isVideo ? "video" : "image"};
     }
+    return {url:"",type:"image"};
+}
+
+function recentJobImageCover(project){
+    const coverUrl = String(project?.cover_image || "").trim();
+    if(coverUrl && !/\.(mp4|webm|mov)(\?|$)/i.test(coverUrl)){
+        return {url:coverUrl,type:"image"};
+    }
+
+    const media = recentJobMediaForProject(project);
+    if(media?.url){
+        const type = String(media.type || "").toLowerCase();
+        const isVideo = type.includes("video") || /\.(mp4|webm|mov)(\?|$)/i.test(String(media.url));
+        if(!isVideo) return {url:String(media.url),type:"image"};
+    }
 
     return {url:"",type:"image"};
 }
 
-function recentJobCard(project,position){
-    const cover = recentJobCover(project);
+function recentJobCard(project,position,mediaMode){
+    const cover = mediaMode === "video"
+        ? {url:recentJobVideoForProject(project),type:"video"}
+        : recentJobImageCover(project);
+
     const projectVideo = recentJobMediaForProject(project);
     const videoType = String(projectVideo?.type || "").toLowerCase();
     const videoUrl = videoType.includes("video") || /\.(mp4|webm|mov)(\?|$)/i.test(String(projectVideo?.url || ""))
@@ -6180,7 +6711,7 @@ function recentJobCard(project,position){
 
     if(cover.url){
         if(cover.type === "video"){
-            mediaHtml = `<video src="${String(cover.url).replace(/"/g,"&quot;")}" muted loop autoplay playsinline preload="metadata"></video>`;
+            mediaHtml = `<video src="${String(cover.url).replace(/"/g,"&quot;")}" muted loop autoplay playsinline preload="auto"></video>`;
         }else{
             mediaHtml = `<img src="${String(cover.url).replace(/"/g,"&quot;")}" alt="${String(project.title || "DyOla project").replace(/"/g,"&quot;")}" loading="lazy">`;
         }
@@ -6212,127 +6743,106 @@ function buildRecentJobFrames(projects){
         else grouped.other.push(project);
     });
 
-    /* Round-robin the service categories so the billboard naturally mixes
-       Video + Photography + Design whenever those projects are available. */
-    const pool = [];
-    const queues = [grouped.video,grouped.photography,grouped.design,grouped.other];
-    let added = true;
+    /* Fixed billboard roles:
+       - GIANT: videos only
+       - SMALL TOP / SMALL BOTTOM: photography + design only
+       The positions never rotate. Only the content inside each slot changes. */
+    const videos = grouped.video.filter(project=>recentJobVideoForProject(project));
+    const lower = [...grouped.photography, ...grouped.design, ...grouped.other]
+        .filter(project=>recentJobImageCover(project).url);
 
-    while(added){
-        added = false;
-        queues.forEach(queue=>{
-            if(queue.length){
-                pool.push(queue.shift());
-                added = true;
-            }
-        });
-    }
-
-    if(pool.length < 3){
-        return pool.length
-            ? [{projects:pool.slice(0,3),key:"frame-0"}]
-            : [];
-    }
-
-    const frames = [];
-    const frameCount = Math.max(pool.length,3);
-
-    for(let i=0;i<frameCount;i++){
-        frames.push({
-            key:`frame-${i}`,
-            projects:[
-                pool[i % pool.length],
-                pool[(i + 1) % pool.length],
-                pool[(i + 2) % pool.length]
-            ]
-        });
-    }
-
-    return frames;
+    return {
+        videos,
+        lower
+    };
 }
 
 function renderRecentJobStage(){
-    if(!recentJobsStage) return;
+    if(!recentJobsStage || !recentJobStages) return;
 
-    const stage = recentJobStages[recentJobStageIndex];
-    if(!stage) return;
+    const videos = recentJobStages.videos || [];
+    const lower = recentJobStages.lower || [];
 
-    const projects = stage.projects.filter(Boolean).slice(0,3);
-    if(!projects.length) return;
-
-    const currentCards = Array.from(recentJobsStage.querySelectorAll(".recent-job-card"));
-
-    if(!currentCards.length){
-        recentJobsStage.innerHTML = projects.map((project,index)=>recentJobCard(project,index)).join("");
-        if(recentJobsDots){
-            recentJobsDots.innerHTML = recentJobStages.map((item,index)=>
-                `<span class="${index === recentJobStageIndex ? "active" : ""}"></span>`
-            ).join("");
-        }
+    if(!videos.length && !lower.length){
+        recentJobsStage.innerHTML = `<div class="recent-job-empty">No published projects yet.</div>`;
+        if(recentJobsDots) recentJobsDots.innerHTML = "";
         return;
     }
 
-    const oldRects = {};
-    currentCards.forEach(card=>{
-        const role = card.classList.contains("giant")
-            ? "giant"
-            : card.classList.contains("small-top")
-                ? "small-top"
-                : "small-bottom";
-        oldRects[role] = card.getBoundingClientRect();
-    });
+    const videoProject = videos[recentJobStageIndex % Math.max(videos.length,1)] || lower[0];
+    const topProject = lower[recentJobSmallTopIndex % Math.max(lower.length,1)] || videoProject;
+    const bottomProject = lower[(recentJobSmallBottomIndex + 1) % Math.max(lower.length,1)] || topProject;
 
-    recentJobsStage.classList.add("is-changing");
-    recentJobsStage.innerHTML = projects.map((project,index)=>recentJobCard(project,index)).join("");
+    recentJobsStage.innerHTML = [
+        videoProject ? recentJobCard(videoProject,0,"video") : "",
+        topProject ? recentJobCard(topProject,1,"image") : "",
+        bottomProject ? recentJobCard(bottomProject,2,"image") : ""
+    ].join("");
 
     if(recentJobsDots){
-        recentJobsDots.innerHTML = recentJobStages.map((item,index)=>
-            `<span class="${index === recentJobStageIndex ? "active" : ""}"></span>`
-        ).join("");
+        const count = Math.max(videos.length,lower.length);
+        recentJobsDots.innerHTML = count > 1
+            ? Array.from({length:count},(_,index)=>`<span class="${index === recentJobStageIndex ? "active" : ""}"></span>`).join("")
+            : "";
     }
 
-    const newCards = Array.from(recentJobsStage.querySelectorAll(".recent-job-card"));
+    forceDyolaAutoplay(recentJobsStage);
+}
 
-    /* Clockwise movement:
-       GIANT LEFT -> TOP RIGHT -> BOTTOM RIGHT -> GIANT LEFT */
-    newCards.forEach(card=>{
-        const targetRole = card.classList.contains("giant")
-            ? "giant"
-            : card.classList.contains("small-top")
-                ? "small-top"
-                : "small-bottom";
+function updateRecentJobSlot(position,project,mediaMode){
+    if(!recentJobsStage || !project) return;
+    const selector = position === 0 ? ".recent-job-card.giant" : position === 1 ? ".recent-job-card.small-top" : ".recent-job-card.small-bottom";
+    const current = recentJobsStage.querySelector(selector);
+    if(!current) return;
 
-        const sourceRole = targetRole === "giant"
-            ? "small-bottom"
-            : targetRole === "small-top"
-                ? "giant"
-                : "small-top";
+    const wrapper = document.createElement("div");
+    wrapper.innerHTML = recentJobCard(project,position,mediaMode).trim();
+    const next = wrapper.firstElementChild;
+    if(!next) return;
 
-        const sourceRect = oldRects[sourceRole];
-        const targetRect = card.getBoundingClientRect();
-        if(!sourceRect) return;
+    /* Only the two smaller image slots get the directional swipe.
+       The giant video slot keeps its existing behavior. */
+    if(mediaMode === "image" && position !== 0){
+        const direction = recentJobSwipeDirections[
+            recentJobSwipeDirectionIndex % recentJobSwipeDirections.length
+        ];
+        recentJobSwipeDirectionIndex++;
+        next.classList.add(`recent-swipe-${direction}`);
+    }
 
-        const x = sourceRect.left - targetRect.left;
-        const y = sourceRect.top - targetRect.top;
-        card.style.transform = `translate(${x}px,${y}px)`;
-    });
-
-    requestAnimationFrame(()=>{
-        requestAnimationFrame(()=>{
-            newCards.forEach(card=>card.style.transform = "translate(0,0)");
-            window.setTimeout(()=>recentJobsStage.classList.remove("is-changing"),920);
-        });
-    });
+    current.replaceWith(next);
+    forceDyolaAutoplay(recentJobsStage);
 }
 
 function startRecentJobsRotation(){
     if(recentJobTimer) clearInterval(recentJobTimer);
-    if(recentJobStages.length < 2) return;
+    if(recentJobSmallTimer) clearInterval(recentJobSmallTimer);
 
-    recentJobTimer = setInterval(()=>{
-        recentJobStageIndex = (recentJobStageIndex + 1) % recentJobStages.length;
-        renderRecentJobStage();
-    },6500);
+    const videos = recentJobStages?.videos || [];
+    const lower = recentJobStages?.lower || [];
+
+    if(videos.length > 1){
+        recentJobTimer = setInterval(()=>{
+            recentJobStageIndex = (recentJobStageIndex + 1) % videos.length;
+            updateRecentJobSlot(0,videos[recentJobStageIndex],"video");
+            if(recentJobsDots){
+                recentJobsDots.querySelectorAll("span").forEach((dot,index)=>dot.classList.toggle("active",index === recentJobStageIndex));
+            }
+        },5000);
+    }
+
+    if(lower.length > 1){
+        recentJobSmallTimer = setInterval(()=>{
+            recentJobSmallTopIndex = (recentJobSmallTopIndex + 1) % lower.length;
+            recentJobSmallBottomIndex = (recentJobSmallBottomIndex + 1) % lower.length;
+            updateRecentJobSlot(1,lower[recentJobSmallTopIndex],"image");
+            updateRecentJobSlot(2,lower[(recentJobSmallBottomIndex + 1) % lower.length],"image");
+        },2250);
+    }
+}
+
+function lowerIndexSeed(lower){
+    return lower.length > 1 ? 1 : 0;
 }
 
 async function loadRecentJobs(){
@@ -6360,13 +6870,17 @@ async function loadRecentJobs(){
         /* One combined pool — Recent Jobs is a billboard, not a category carousel. */
         recentJobStages = buildRecentJobFrames(projectResult.data || []);
 
-        if(!recentJobStages.length){
+        if(!recentJobStages ||
+           ((!recentJobStages.videos || !recentJobStages.videos.length) &&
+            (!recentJobStages.lower || !recentJobStages.lower.length))){
             recentJobsStage.innerHTML = `<div class="recent-job-empty">No published projects yet.</div>`;
             if(recentJobsDots) recentJobsDots.innerHTML = "";
             return;
         }
 
         recentJobStageIndex = 0;
+        recentJobSmallTopIndex = 0;
+        recentJobSmallBottomIndex = lowerIndexSeed(recentJobStages.lower);
         renderRecentJobStage();
         startRecentJobsRotation();
 
@@ -7439,7 +7953,7 @@ async function loadActiveCompanies(){
                 const website = item.website_url ? escapeReviewText(item.website_url) : "";
 
                 if(logo){
-                    const image = `<img src="${logo}" alt="${name}" style="max-height:42px;width:auto;max-width:150px;object-fit:contain">`;
+                    const image = `<img src="${logo}" alt="${name}" class="company-logo-image">`;
                     return website
                         ? `<a class="client-logo-item" href="${website}" target="_blank" rel="noopener noreferrer">${image}</a>`
                         : `<div class="client-logo-item">${image}</div>`;
@@ -7662,8 +8176,6 @@ loadActiveCompanies();
 loadApprovedReviews();
 
 
-
-
 /* =========================================================
    ESCAPE KEY
    ========================================================= */
@@ -7700,6 +8212,41 @@ document.addEventListener(
 
 </script>
 
+
+
+
+
+
+<script>
+/* LOCKED AUTOPLAY RECOVERY — dynamically inserted public videos */
+function forceDyolaAutoplay(root){
+    const scope = root || document;
+    scope.querySelectorAll("video[autoplay]").forEach(function(video){
+        video.muted = true;
+        video.setAttribute("muted", "");
+        video.setAttribute("playsinline", "");
+        video.setAttribute("autoplay", "");
+        const playNow = function(){ video.play().catch(function(){}); };
+        if(video.readyState >= 2) playNow();
+        else video.addEventListener("canplay", playNow, {once:true});
+    });
+}
+
+document.addEventListener("DOMContentLoaded", function(){
+    forceDyolaAutoplay(document);
+
+    const dyolaVideoObserver = new MutationObserver(function(mutations){
+        mutations.forEach(function(mutation){
+            mutation.addedNodes.forEach(function(node){
+                if(node.nodeType !== 1) return;
+                if(node.matches && node.matches("video[autoplay]")) forceDyolaAutoplay(node.parentElement || node);
+                else if(node.querySelectorAll) forceDyolaAutoplay(node);
+            });
+        });
+    });
+    dyolaVideoObserver.observe(document.body,{childList:true,subtree:true});
+});
+</script>
 
 </body>
 </html>
