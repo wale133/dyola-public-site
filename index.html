@@ -1370,6 +1370,10 @@ p{
 
 .project-story-testimonial blockquote{margin:0;color:#fff;font-family:Georgia,"Times New Roman",serif;font-size:clamp(20px,3vw,30px);line-height:1.35}
 .project-story-testimonial cite{display:block;margin-top:18px;color:#9da8b7;font-size:10px;font-style:normal}
+.project-story-testimonial-wrap{position:relative}
+.project-story-testimonial-controls{display:flex;align-items:center;justify-content:flex-end;gap:8px;margin-top:12px}
+.project-story-testimonial-controls button{width:38px;height:34px;border:1px solid rgba(255,255,255,.28);border-radius:4px;background:transparent;color:#fff;cursor:pointer;font-size:18px;line-height:1}
+.project-story-testimonial-controls span{min-width:48px;text-align:center;color:#fff;font-size:14px}
 
 .project-story-related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:24px}
 .project-story-related-card{position:relative;display:block;overflow:hidden;aspect-ratio:16/10;background:#0a1931;cursor:pointer}
@@ -3282,46 +3286,226 @@ h1, h2, h3, h4, h5, h6, p, a, button, label, blockquote{
 
 .project-viewer-box{
     position:relative;
-    width:min(1000px,100%);
-    max-height:90vh;
-    overflow:auto;
-    padding:28px;
+    width:min(92vw,1100px);
+    height:min(92dvh,900px);
+    max-width:1100px;
+    max-height:92dvh;
+    overflow:hidden;
     background:#fff;
     color:var(--navy);
+    display:flex;
+    flex-direction:column;
+    border-radius:2px;
+}
+
+.project-viewer-top{
+    flex:0 0 auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:16px 54px 14px 18px;
+    background:#0A1931;
+    border-bottom:1px solid rgba(245,247,250,.16);
+}
+
+.project-viewer-heading{
+    min-width:0;
+}
+
+.project-viewer-title{
+    margin:0;
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:clamp(24px,6vw,34px);
+    line-height:1.05;
+    font-weight:400;
+    color:#F5F7FA;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.project-viewer-counter{
+    margin-top:5px;
+    color:#B0B7C3;
+    font-size:9px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
 }
 
 .project-viewer-close{
     position:absolute;
-    top:12px;
-    right:12px;
-    z-index:2;
+    top:10px;
+    right:10px;
+    z-index:20;
     width:38px;
     height:38px;
-    border:1px solid var(--line);
+    border:1px solid rgba(245,247,250,.35);
     border-radius:50%;
-    background:#fff;
-    color:var(--navy);
+    background:#0A1931;
+    color:#F5F7FA;
     font-size:22px;
-}
-
-.project-viewer-title{
-    margin:0 50px 20px 0;
-    font-family:Georgia,"Times New Roman",serif;
-    font-size:clamp(30px,5vw,52px);
-    font-weight:400;
+    cursor:pointer;
 }
 
 .project-viewer-media{
+    position:relative;
+    flex:1 1 auto;
+    min-height:0;
     width:100%;
-    background:#08111f;
+    background:#0A1931;
+    overflow:hidden;
+    touch-action:pan-y;
 }
 
-.project-viewer-media video,
+.project-viewer-slide{
+    width:100%;
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    background:#0A1931;
+}
+
+.project-viewer-media video{
+    display:block;
+    width:auto;
+    height:auto;
+    max-width:100%;
+    max-height:100%;
+    object-fit:contain;
+    object-position:center;
+    flex:0 0 auto;
+    transform:none;
+}
+
 .project-viewer-media img{
     display:block;
-    width:100%;
-    max-height:70vh;
+    width:auto;
+    height:auto;
+    max-width:none;
+    max-height:none;
     object-fit:contain;
+    object-position:center;
+    flex:0 0 auto;
+    transform:none;
+    margin:auto;
+}
+
+.project-viewer-nav{
+    position:absolute;
+    inset:0;
+    z-index:12;
+    pointer-events:none;
+}
+
+.project-viewer-arrow{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    width:38px;
+    height:38px;
+    border:1px solid rgba(255,255,255,.4);
+    border-radius:50%;
+    background:rgba(5,10,20,.55);
+    color:#fff;
+    font-size:22px;
+    cursor:pointer;
+    pointer-events:auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    backdrop-filter:blur(4px);
+}
+
+.project-viewer-arrow.prev{left:10px}
+.project-viewer-arrow.next{right:10px}
+.project-viewer-arrow[hidden]{display:none!important}
+
+/* Photography / Design viewer controls become subtle after a short pause. */
+.project-viewer-nav.viewer-controls-faded .project-viewer-arrow{
+    opacity:.18;
+    transition:opacity .35s ease;
+}
+.project-viewer-nav .project-viewer-arrow{
+    transition:opacity .35s ease;
+}
+
+.project-viewer-bottom{
+    flex:0 0 auto;
+    padding:10px 14px;
+    text-align:center;
+    background:#0A1931;
+    color:#F5F7FA;
+    font-size:9px;
+}
+
+
+@media (min-width:601px) and (max-width:1024px){
+    .project-viewer{
+        padding:16px;
+    }
+
+    .project-viewer-box{
+        width:min(94vw,980px);
+        height:min(92dvh,900px);
+    }
+}
+
+@media (max-width:600px){
+    .project-viewer{
+        padding:0;
+        align-items:stretch;
+    }
+
+    .project-viewer-box{
+        width:100%;
+        height:100dvh;
+        max-width:none;
+        max-height:none;
+        border-radius:0;
+    }
+
+    .project-viewer-top{
+        padding:15px 54px 13px 16px;
+    }
+
+    .project-viewer-title{
+        font-size:28px;
+    }
+
+    .project-viewer-media{
+        min-height:0;
+        min-width:0;
+    }
+
+    .project-viewer-media video{
+        max-width:100%;
+        max-height:100%;
+        width:auto;
+        height:auto;
+    }
+
+    .project-viewer-media img{
+        width:auto;
+        height:auto;
+        max-width:none;
+        max-height:none;
+        object-fit:contain;
+        margin:auto;
+    }
+
+    .project-viewer-bottom{
+        padding:9px 12px calc(9px + env(safe-area-inset-bottom));
+        background:#0A1931;
+        color:#F5F7FA;
+    }
+
+    .project-viewer-arrow{
+        width:34px;
+        height:34px;
+    }
 }
 
 .project-viewer-empty{
@@ -3570,14 +3754,14 @@ h1, h2, h3, h4, h5, h6, p, a, button, label, blockquote{
 .project-story-feature-thumb img{width:100%;height:100%;object-fit:cover}
 
 .project-story-work-section{padding-top:45px}
-.project-story-work-head{display:block;margin-bottom:28px}
+.project-story-work-head{display:block;margin-bottom:0}
 .project-story-work-title-row{display:flex;align-items:end;justify-content:space-between;gap:20px}
 .project-story-work-tabs{margin-top:18px;display:flex;gap:7px;overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none}
 .project-story-work-tabs::-webkit-scrollbar{display:none}
 .project-story-work-tab{flex:0 0 auto;padding:9px 15px;border:1px solid rgba(255,255,255,.15);border-radius:6px;background:#0b1728;color:#b7c1cf;font-size:10px}
 .project-story-work-tab.active{background:#fff;color:#06101d;border-color:#fff}
-.project-story-media-groups{display:grid;gap:34px}
-.project-story-media-group{scroll-margin-top:80px}
+.project-story-media-groups{display:block;margin:8px 0 0}
+.project-story-media-group{scroll-margin-top:80px;margin:0 0 20px}.project-story-media-group:last-child{margin-bottom:0}
 .project-story-media-group[hidden]{display:none!important}
 .project-story-media-group-head{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:12px}
 .project-story-media-group-head h3{margin:0;font-family:Georgia,"Times New Roman",serif;font-size:25px;font-weight:400;color:#fff}
@@ -3679,6 +3863,7 @@ html{
     object-position:center;
     opacity:1 !important;
     transition:none !important;
+    will-change:transform;
 }
 
 .hero-background::after{
@@ -3900,6 +4085,66 @@ html{
 
 .service-card:hover .service-image{
     transform:scale(1.035);
+}
+
+/* Elegant fallback artwork for services that do not yet have real project media. */
+.service-image-placeholder{
+    position:relative;
+    display:flex;
+    align-items:flex-end;
+    overflow:hidden;
+    background:
+        radial-gradient(circle at 78% 22%,rgba(255,255,255,.12),transparent 30%),
+        linear-gradient(135deg,#172d4d 0%,#0b1a31 55%,#081326 100%);
+}
+
+.service-image-placeholder::before{
+    content:"";
+    position:absolute;
+    width:180px;
+    height:180px;
+    border:1px solid rgba(255,255,255,.16);
+    border-radius:50%;
+    right:-55px;
+    top:-70px;
+}
+
+.service-image-placeholder::after{
+    content:"";
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    height:45%;
+    background:linear-gradient(to top,rgba(5,14,28,.72),transparent);
+}
+
+.service-placeholder-content{
+    position:relative;
+    z-index:1;
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+    padding:20px;
+    color:#fff;
+}
+
+.service-placeholder-label{
+    font-size:9px;
+    letter-spacing:2px;
+    color:rgba(255,255,255,.62);
+}
+
+.service-placeholder-content strong{
+    font-family:inherit;
+    font-size:clamp(18px,1.7vw,24px);
+    font-weight:500;
+    line-height:1.05;
+}
+
+.service-placeholder-content span:last-child{
+    font-size:11px;
+    color:rgba(255,255,255,.68);
 }
 
 .service-meta{
@@ -4171,6 +4416,85 @@ html{
 /* LOCKED WHAT WE DO — Learn More controls remain removed. */
 #services .service-link{display:none !important;}
 
+
+/* Big Picture → Selected Work transition cue */
+.statement-to-work-arrow{
+    position:relative;
+    width:100%;
+    height:54px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:4px;
+    background:#fff;
+    pointer-events:none;
+}
+.statement-to-work-arrow span{
+    display:block;
+    width:12px;
+    height:12px;
+    border-right:2px solid #0A1931;
+    border-bottom:2px solid #0A1931;
+    transform:rotate(45deg);
+    opacity:.75;
+    animation:dyolaWorkArrowDown 1.4s ease-in-out infinite;
+}
+.statement-to-work-arrow span + span{
+    margin-top:-7px;
+    opacity:.42;
+    animation-delay:.18s;
+}
+
+@keyframes dyolaWorkArrowDown{
+    0%,100%{
+        transform:rotate(45deg) translate(0,0);
+        opacity:.35;
+    }
+    50%{
+        transform:rotate(45deg) translate(4px,4px);
+        opacity:1;
+    }
+}
+
+/* Selected Work — DyOla blue */
+.visual-work{
+    background:#0A1931;
+}
+.visual-work .visual-work-heading h2,
+.visual-work .visual-work-heading p,
+.visual-work .visual-work-count{
+    color:#F5F7FA;
+}
+.visual-work .kicker{
+    color:#B0B7C3;
+}
+.visual-work .visual-work-filter{
+    color:#F5F7FA !important;
+    background:transparent !important;
+    border-color:rgba(245,247,250,.65) !important;
+    opacity:1 !important;
+}
+.visual-work .visual-work-filter.active{
+    background:#F5F7FA !important;
+    color:#0A1931 !important;
+    border-color:#F5F7FA !important;
+}
+.visual-work .visual-work-filter:hover,
+.visual-work .visual-work-filter:focus-visible{
+    color:#F5F7FA !important;
+    background:rgba(245,247,250,.12) !important;
+    border-color:#F5F7FA !important;
+}
+.visual-work .visual-work-filter:hover{
+    border-color:#F5F7FA;
+}
+
+@media (max-width:600px){
+    .statement-to-work-arrow{
+        height:44px;
+    }
+}
 
 /* =========================================================
    FINAL RESPONSIVE HARDENING
@@ -4630,6 +4954,11 @@ footer{
      SELECTED WORK / VISUAL STORIES
      ======================================================= -->
 
+<div class="statement-to-work-arrow" aria-hidden="true">
+    <span></span>
+    <span></span>
+</div>
+
 <section class="visual-work reveal reveal-right" id="work">
 
     <div class="container">
@@ -4815,42 +5144,7 @@ footer{
             <div
                 class="review-list"
                 id="reviewList">
-
-
-                <article class="review-card">
-
-                    <div class="review-stars">
-                        ★★★★★
-                    </div>
-
-                    <blockquote>
-                        “DyOla helped us tell our story in a way that actually makes sense to our audience.”
-                    </blockquote>
-
-                    <div class="review-author">
-                        Client testimonial · King Bell Homes
-                    </div>
-
-                </article>
-
-
-                <article class="review-card">
-
-                    <div class="review-stars">
-                        ★★★★★
-                    </div>
-
-                    <blockquote>
-                        “The quality of their work is excellent, and the results we've seen from the campaigns have been impressive.”
-                    </blockquote>
-
-                    <div class="review-author">
-                        Client testimonial · King Bell Homes
-                    </div>
-
-                </article>
-
-
+                <div class="review-card"><div class="review-stars">★★★★★</div><blockquote>Loading client reviews…</blockquote></div>
             </div>
 
 
@@ -4890,10 +5184,6 @@ footer{
 
 
         <div class="about-image">
-
-            <img
-                src="https://images.unsplash.com/photo-1492724441997-5dc865305da7?auto=format&fit=crop&w=1400&q=88"
-                alt="DyOla creative production">
 
         </div>
 
@@ -5677,9 +5967,25 @@ footer{
 <!-- PROJECT VIEWER -->
 <div class="project-viewer" id="projectViewer" aria-hidden="true">
     <div class="project-viewer-box">
-        <button class="project-viewer-close" id="closeProjectViewer" type="button">×</button>
-        <h2 class="project-viewer-title" id="projectViewerTitle"></h2>
-        <div class="project-viewer-media" id="projectViewerMedia"></div>
+        <button class="project-viewer-close" id="closeProjectViewer" type="button" aria-label="Close media viewer">×</button>
+
+        <div class="project-viewer-top">
+            <div class="project-viewer-heading">
+                <h2 class="project-viewer-title" id="projectViewerTitle"></h2>
+                <div class="project-viewer-counter" id="projectViewerCounter"></div>
+            </div>
+        </div>
+
+        <div class="project-viewer-media" id="projectViewerMedia">
+            <div class="project-viewer-nav">
+                <button class="project-viewer-arrow prev" id="projectViewerPrev" type="button" aria-label="Previous media">‹</button>
+                <button class="project-viewer-arrow next" id="projectViewerNext" type="button" aria-label="Next media">›</button>
+            </div>
+        </div>
+
+        <div class="project-viewer-bottom">
+            Swipe left or right to browse
+        </div>
     </div>
 </div>
 
@@ -6209,7 +6515,13 @@ function applySectionMedia(sectionKey,mediaItems){
             })
             ;
 
-        if(!images.length) return;
+        if(!images.length){
+            target.innerHTML = "";
+            target.classList.remove("about-image-slideshow");
+            if(target.__dyolaAboutTimer) clearInterval(target.__dyolaAboutTimer);
+            target.__dyolaAboutTimer = null;
+            return;
+        }
 
         target.innerHTML = "";
         target.classList.add("about-image-slideshow");
@@ -6271,7 +6583,7 @@ async function dyolaLoadAboutGalleryFallback(){
     try{
         const result=await supabaseClient
             .from("media")
-            .select("id,name,type,folder,url,r2_key,created_at")
+            .select("id,name,type,folder,url,r2_key,display_order,created_at")
             .eq("folder","About")
             .order("created_at",{ascending:false});
         if(result.error){
@@ -6300,6 +6612,91 @@ async function loadPublicWebsiteContent(){
         }
 
         const sections = result.data || [];
+
+        /*
+         * HERO FIRST-PAINT BOOTSTRAP
+         * Do not make the hero wait for every other section/media request.
+         * The hero is the first thing visitors see, so fetch its background
+         * media immediately and start playback as soon as the browser has
+         * enough data.
+         */
+        const heroSection = sections.find(function(item){
+            return item.section_key === "Hero" && item.background_media_id;
+        });
+
+        let heroBootPromise = Promise.resolve();
+
+        // Load the exact Admin-selected hero media first. If that reference is
+        // missing or stale, fall back to the latest media in the Hero folder so
+        // the hero does not silently become a plain navy block.
+        heroBootPromise = (heroSection && heroSection.background_media_id
+            ? supabaseClient
+                .from("media")
+                .select("id,name,display_name,type,folder,url,r2_key,project_id,display_order,created_at")
+                .eq("id",heroSection.background_media_id)
+                .maybeSingle()
+            : Promise.resolve({data:null,error:null})
+        ).then(async function(heroResult){
+            let heroMedia = heroResult && !heroResult.error ? heroResult.data : null;
+
+            if(heroResult && heroResult.error){
+                console.error("Could not load selected hero media:",heroResult.error);
+            }
+
+            if(!heroMedia){
+                const fallbackResult = await supabaseClient
+                    .from("media")
+                    .select("id,name,display_name,type,folder,url,r2_key,project_id,display_order,created_at")
+                    .eq("folder","Hero")
+                    .order("created_at",{ascending:false})
+                    .limit(1)
+                    .maybeSingle();
+
+                if(fallbackResult.error){
+                    console.error("Could not load hero fallback media:",fallbackResult.error);
+                }else{
+                    heroMedia = fallbackResult.data || null;
+                }
+            }
+
+            // If the old Admin-selected Hero media was deleted (for example,
+            // from an old General folder), use the newest available video as
+            // a final fallback so the Hero does not become an empty block.
+            if(!heroMedia){
+                const latestVideoResult = await supabaseClient
+                    .from("media")
+                    .select("id,name,display_name,type,folder,url,r2_key,project_id,display_order,created_at")
+                    .or("type.ilike.%video%,url.ilike.%.mp4%,url.ilike.%.webm%,url.ilike.%.mov%")
+                    .order("created_at",{ascending:false})
+                    .limit(1)
+                    .maybeSingle();
+
+                if(latestVideoResult.error){
+                    console.error("Could not load latest video hero fallback:",latestVideoResult.error);
+                }else{
+                    heroMedia = latestVideoResult.data || null;
+                }
+            }
+
+            const hero = document.querySelector(".hero");
+            if(!hero || !heroMedia || !heroMedia.url) return;
+
+            applySectionBackground(hero,heroMedia);
+
+            const heroVideo = hero.querySelector(".hero-background video");
+            if(heroVideo){
+                heroVideo.setAttribute("fetchpriority","high");
+                heroVideo.preload = "auto";
+                heroVideo.muted = true;
+                heroVideo.defaultMuted = true;
+                heroVideo.playsInline = true;
+                try{ heroVideo.load(); }catch(error){}
+                heroVideo.play().catch(function(){});
+            }
+        }).catch(function(error){
+            console.error("Hero bootstrap failed:",error);
+        });
+
         const backgroundIds = sections
             .map(item=>item.background_media_id)
             .filter(Boolean);
@@ -6311,7 +6708,7 @@ async function loadPublicWebsiteContent(){
         if(mediaIds.length){
             const mediaResult = await supabaseClient
                 .from("media")
-                .select("id,name,type,folder,url,r2_key")
+                .select("id,name,display_name,type,folder,url,r2_key,project_id,display_order,created_at")
                 .in("id",mediaIds);
 
             if(mediaResult.error){
@@ -6321,6 +6718,8 @@ async function loadPublicWebsiteContent(){
             }
         }
 
+        await heroBootPromise;
+
         sections.forEach(item=>{
             applyPublicSectionContent(item);
 
@@ -6328,8 +6727,15 @@ async function loadPublicWebsiteContent(){
                 ? document.querySelector(PUBLIC_SECTION_MAP[item.section_key].section)
                 : null;
 
+            // Hero was already bootstrapped above. Keep this fallback for
+            // cases where the fast hero request did not return a usable URL.
             if(section && item.background_media_id){
-                applySectionBackground(section,mediaById[item.background_media_id]);
+                const heroAlreadyLoaded = item.section_key === "Hero" &&
+                    !!section.querySelector(".hero-background video, .hero-background img");
+
+                if(!heroAlreadyLoaded && mediaById[item.background_media_id]){
+                    applySectionBackground(section,mediaById[item.background_media_id]);
+                }
             }
 
             const selectedMedia = (Array.isArray(item.media_ids) ? item.media_ids : [])
@@ -6409,37 +6815,74 @@ function escapeHtml(value){
         .replace(/'/g,"&#039;");
 }
 
-function publicProjectVideo(project,mediaItems){
-    const title = String(project?.title || "").toLowerCase().trim();
-    const slug = String(project?.slug || "").toLowerCase().trim();
-    const match = (mediaItems || []).find(function(media){
-        const type = String(media?.type || "").toLowerCase();
-        const url = String(media?.url || "");
-        const isVideo = type.includes("video") || /\.(mp4|webm|mov)(\?|$)/i.test(url);
-        if(!isVideo || !url) return false;
-        const name = String(media?.name || "").toLowerCase().trim();
-        const folder = String(media?.folder || "").toLowerCase().trim();
-        return (title && name.includes(title)) || (slug && name.includes(slug)) ||
-               (title && folder.includes(title)) || (slug && folder.includes(slug));
+function publicProjectMedia(project,mediaItems){
+    const projectId=String(project?.id||"");
+    return (mediaItems||[]).filter(function(media){
+        return String(media?.project_id||"")===projectId && media?.url;
     });
-    return match?.url || "";
+}
+
+function publicProjectMedia(project,mediaItems){
+    const projectId=String(project?.id||"");
+    return (mediaItems||[]).filter(function(media){
+        return String(media?.project_id||"")===projectId && !!media?.url;
+    });
+}
+
+function publicProjectVideo(project,mediaItems){
+    const match=publicProjectMedia(project,mediaItems).find(function(media){
+        const type=String(media?.type||"").toLowerCase();
+        const url=String(media?.url||"");
+        return type.includes("video") || /\.(mp4|webm|mov)(\?|$)/i.test(url);
+    });
+    return match?.url||"";
+}
+
+function publicProjectImage(project,mediaItems){
+    const match=publicProjectMedia(project,mediaItems).find(function(media){
+        const type=String(media?.type||"").toLowerCase();
+        const url=String(media?.url||"");
+        const isVideo=type.includes("video") || /\.(mp4|webm|mov)(\?|$)/i.test(url);
+        return !isVideo;
+    });
+    return match?.url||"";
+}
+
+function publicProjectCover(project,mediaItems){
+    const video=publicProjectVideo(project,mediaItems);
+    if(video) return {url:video,type:"video"};
+
+    const image=publicProjectImage(project,mediaItems);
+    if(image) return {url:image,type:"image"};
+
+    return {url:"",type:""};
 }
 
 function renderPublicProjects(projects,mediaItems){
-    const track = document.getElementById("workResults");
+    const track=document.getElementById("workResults");
     if(!track) return;
 
-    const ordered = projects || [];
-    track.innerHTML = ordered.map(function(project){
-        const industry = projectIndustry(project);
-        const tag = project.category || project.subcategory || "Project";
-        const image = project.cover_image || "";
-        const videoUrl = publicProjectVideo(project,mediaItems);
-        const mediaHtml = videoUrl
-            ? `<video src="${escapeHtml(videoUrl)}" muted loop autoplay playsinline preload="auto" aria-label="${escapeHtml(project.title || "DyOla project")}"></video>`
-            : (image
-                ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(project.title || "DyOla project")}" loading="lazy">`
-                : `<div class="project-story-placeholder-media"></div>`);
+    /* A public project card exists only when the project has actual media
+       assigned to it in the Media Library. No filename/folder guessing and
+       no projects.cover_image fallback. */
+    const ordered=(projects||[]).filter(function(project){
+        return publicProjectMedia(project,mediaItems).length>0;
+    });
+
+    track.innerHTML=ordered.map(function(project){
+        const industry=projectIndustry(project);
+        const tag=project.category || project.subcategory || "Project";
+        const cover=publicProjectCover(project,mediaItems);
+
+        let mediaHtml="";
+
+        if(cover.type==="video"){
+            mediaHtml=`<video src="${escapeHtml(cover.url)}" muted loop autoplay playsinline preload="auto" aria-label="${escapeHtml(project.title || "Dyola project")}"></video>`;
+        }else if(cover.type==="image"){
+            mediaHtml=`<img src="${escapeHtml(cover.url)}" alt="${escapeHtml(project.title || "Dyola project")}" loading="lazy">`;
+        }else{
+            mediaHtml=`<div class="project-story-placeholder-media"></div>`;
+        }
 
         return `<article class="visual-work-card has-arrow"
             data-project-id="${escapeHtml(project.id)}"
@@ -6456,83 +6899,27 @@ ${mediaHtml}
         </article>`;
     }).join("");
 
-    window.dyolaProjects = ordered;
-    window.dyolaMedia = mediaItems || [];
+    window.dyolaProjects=ordered;
+    window.dyolaMedia=mediaItems || [];
 
-    workProjects = Array.from(track.querySelectorAll(".visual-work-card"));
+    workProjects=Array.from(track.querySelectorAll(".visual-work-card"));
 
-    /* Bind the project cards directly so opening a Project Story does not
-       depend on another document-level click handler being registered. */
     workProjects.forEach(function(card){
         card.addEventListener("click",function(event){
             event.preventDefault();
             event.stopPropagation();
 
-            const project = ordered.find(function(item){
-                return String(item.id) === String(card.dataset.projectId);
+            const project=ordered.find(function(item){
+                return String(item.id)===String(card.dataset.projectId);
             });
 
-            if(project && typeof openProjectStory === "function"){
-                openProjectStory(project);
-            }
-        });
-
-        card.addEventListener("keydown",function(event){
-            if(event.key !== "Enter" && event.key !== " ") return;
-            event.preventDefault();
-
-            const project = ordered.find(function(item){
-                return String(item.id) === String(card.dataset.projectId);
-            });
-
-            if(project && typeof openProjectStory === "function"){
+            if(project && typeof openProjectStory==="function"){
                 openProjectStory(project);
             }
         });
     });
 
     filterVisualWork(activeIndustry);
-    forceDyolaAutoplay(track);
-}
-
-function hydrateServiceReferenceImages(projects){
-    const cards = Array.from(document.querySelectorAll(".service-card[data-service]"));
-    if(!cards.length) return;
-
-    const list = Array.isArray(projects) ? projects.filter(function(project){
-        return project && project.cover_image;
-    }) : [];
-
-    function findByType(type){
-        return list.find(function(project){
-            const value = String(project.category || project.subcategory || "").toLowerCase();
-            if(type === "video") return value.includes("video") || value.includes("film") || value.includes("commercial");
-            if(type === "photography") return value.includes("photo");
-            if(type === "graphics") return value.includes("graphic") || value.includes("design");
-            return false;
-        });
-    }
-
-    const used = new Set();
-    cards.forEach(function(card){
-        const type = card.dataset.service;
-        let project = findByType(type);
-
-        if(project && used.has(project.id)) project = null;
-        if(project) used.add(project.id);
-
-        if(!project && type === "advertising"){
-            project = list.find(function(item){ return !used.has(item.id) && item.featured; }) || list.find(function(item){ return !used.has(item.id); });
-            if(project) used.add(project.id);
-        }
-
-        if(!project) return;
-
-        const image = card.querySelector(".service-image");
-        if(!image) return;
-
-        image.style.backgroundImage = `url("${String(project.cover_image).replace(/"/g,'\\"')}")`;
-    });
 }
 
 async function loadPublicProjects(){
@@ -6540,7 +6927,7 @@ async function loadPublicProjects(){
 
         const projectResult = await supabaseClient
             .from("projects")
-            .select("id,title,slug,description,category,subcategory,client,location,cover_image,featured,published,created_at,updated_at")
+            .select("id,title,slug,description,challenge,approach,outcome,category,subcategory,client,location,featured,published,created_at,updated_at")
             .order("created_at",{ascending:false});
 
         if(projectResult.error){
@@ -6553,7 +6940,7 @@ async function loadPublicProjects(){
 
         const mediaResult = await supabaseClient
             .from("media")
-            .select("id,name,type,folder,url,r2_key");
+            .select("id,name,display_name,type,folder,url,r2_key,project_id,display_order,created_at");
 
         if(mediaResult.error){
             console.error(
@@ -6571,7 +6958,7 @@ async function loadPublicProjects(){
             window.dyolaMedia
         );
 
-        hydrateServiceReferenceImages(window.dyolaProjects);
+        hydrateServiceReferenceImages(window.dyolaProjects,window.dyolaMedia);
 
     }catch(error){
 
@@ -6584,6 +6971,165 @@ async function loadPublicProjects(){
 }
 
 loadPublicProjects();
+
+/* =========================================================
+   SERVICE REFERENCE IMAGES — PULL FROM REAL PROJECT MEDIA
+   ========================================================= */
+
+function mediaIsVideoForService(media){
+    const type=String(media?.type||"").toLowerCase();
+    const url=String(media?.url||"");
+    return type.includes("video") || /\.(mp4|webm|mov)(\?|$)/i.test(url);
+}
+
+function mediaIsGraphicForService(media){
+    const type=String(media?.type||"").toLowerCase();
+    return type.includes("graphic") || type.includes("design");
+}
+
+function serviceMediaCandidates(service,projects,mediaItems){
+    /*
+     * WHAT WE DO is driven ONLY by real media attached to published projects.
+     * website_sections.media_ids are intentionally not used here.
+     */
+    const published=(projects||[])
+        .filter(project=>project && project.published !== false)
+        .sort((a,b)=>new Date(b.created_at||0)-new Date(a.created_at||0));
+
+    const projectMedia=(project)=>(mediaItems||[])
+        .filter(media=>String(media?.project_id||"")===String(project?.id||"") && media?.url)
+        .slice()
+        .sort((a,b)=>{
+            const ao=a?.display_order==null ? Number.MAX_SAFE_INTEGER : Number(a.display_order);
+            const bo=b?.display_order==null ? Number.MAX_SAFE_INTEGER : Number(b.display_order);
+            if(ao!==bo) return ao-bo;
+            return new Date(a?.created_at||0)-new Date(b?.created_at||0);
+        });
+
+    const findAcrossProjects=(predicate)=>{
+        for(const project of published){
+            const match=projectMedia(project).find(predicate);
+            if(match) return match;
+        }
+        return null;
+    };
+
+    if(service === "video"){
+        return findAcrossProjects(media=>mediaIsVideoForService(media));
+    }
+
+    if(service === "photography"){
+        return findAcrossProjects(media=>
+            !mediaIsVideoForService(media) && !mediaIsGraphicForService(media)
+        );
+    }
+
+    if(service === "graphics"){
+        return findAcrossProjects(media=>mediaIsGraphicForService(media));
+    }
+
+    if(service === "advertising"){
+        return findAcrossProjects(media=>{
+            const project = published.find(p=>
+                String(p.id)===String(media.project_id)
+            );
+            const category=String(project?.category||"").toLowerCase();
+            const subcategory=String(project?.subcategory||"").toLowerCase();
+            const folder=String(media.folder||"").toLowerCase();
+            return folder.includes("advert") ||
+                   folder.includes("campaign") ||
+                   category.includes("advert") ||
+                   category.includes("campaign") ||
+                   subcategory.includes("advert") ||
+                   subcategory.includes("campaign");
+        });
+    }
+
+    return null;
+}
+
+function servicePlaceholder(service){
+    const card=document.querySelector(`.service-card[data-service="${service}"]`);
+    if(!card) return;
+    const image=card.querySelector(".service-image");
+    if(!image) return;
+
+    image.classList.add("service-image-placeholder",`service-placeholder-${service}`);
+    image.style.backgroundImage="";
+    image.innerHTML=`<div class="service-placeholder-content">
+        <span class="service-placeholder-label">DYOLA</span>
+        <strong>${service === "graphics" ? "Design work" : "Targeted campaigns"}</strong>
+        <span>Coming soon</span>
+    </div>`;
+}
+
+function hydrateServiceReferenceImages(projects,mediaItems){
+    const services=["video","photography","graphics","advertising"];
+
+    services.forEach(function(service){
+        const card=document.querySelector(`.service-card[data-service="${service}"]`);
+        if(!card) return;
+
+        const image=card.querySelector(".service-image");
+        if(!image) return;
+
+        const media=serviceMediaCandidates(service,projects,mediaItems||window.dyolaMedia||[]);
+
+        image.classList.remove(
+            "service-image-placeholder",
+            "service-placeholder-video",
+            "service-placeholder-photography",
+            "service-placeholder-graphics",
+            "service-placeholder-advertising"
+        );
+        image.innerHTML="";
+        image.style.backgroundImage="";
+        image.removeAttribute("data-source-media-id");
+
+        if(!media || !media.url){
+            servicePlaceholder(service);
+            return;
+        }
+
+        const isVideo=mediaIsVideoForService(media);
+        image.setAttribute("data-source-media-id",media.id || "");
+        image.setAttribute("aria-label",media.display_name || media.name || `${service} project media`);
+
+        if(isVideo){
+            const video=document.createElement("video");
+            video.src=media.url;
+            video.muted=true;
+            video.defaultMuted=true;
+            video.autoplay=true;
+            video.loop=true;
+            video.playsInline=true;
+            video.preload="auto";
+            video.setAttribute("muted","");
+            video.setAttribute("autoplay","");
+            video.setAttribute("playsinline","");
+            video.setAttribute("aria-label",media.display_name || media.name || `${service} project video`);
+            video.style.width="100%";
+            video.style.height="100%";
+            video.style.objectFit="cover";
+            video.style.display="block";
+
+            /* If the video needs a moment to load, use a real image from the
+               same project as the poster. It is still project media. */
+            const sameProjectImages=(mediaItems||[])
+                .filter(item=>String(item?.project_id||"")===String(media?.project_id||"") && item?.url && !mediaIsVideoForService(item) && !mediaIsGraphicForService(item))
+                .sort((a,b)=>new Date(a?.created_at||0)-new Date(b?.created_at||0));
+            if(sameProjectImages[0]?.url) video.poster=sameProjectImages[0].url;
+
+            image.appendChild(video);
+            const startServiceVideo=()=>video.play().catch(()=>{});
+            video.addEventListener("loadeddata",startServiceVideo,{once:true});
+            video.addEventListener("canplay",startServiceVideo,{once:true});
+            startServiceVideo();
+        }else{
+            image.style.backgroundImage=`url("${String(media.url).replace(/\\/g,"\\\\").replace(/"/g,'\\"')}")`;
+        }
+    });
+}
 
 /* =========================================================
    RECENT JOBS — DYOLA WORK BILLBOARD
@@ -6627,41 +7173,33 @@ function recentJobCategoryLabel(project){
     return "Video";
 }
 
-function recentJobMediaForProject(project){
-    const title = String(project?.title || "").toLowerCase().trim();
-    const slug = String(project?.slug || "").toLowerCase().trim();
+function recentJobMediaForProject(project,preferredType){
+    const projectId=String(project?.id||"");
+    const items=recentJobMedia
+        .filter(function(media){
+            return String(media?.project_id||"")===projectId && media?.url;
+        })
+        .slice()
+        .sort(function(a,b){
+            const ao=a?.display_order==null ? Number.MAX_SAFE_INTEGER : Number(a.display_order);
+            const bo=b?.display_order==null ? Number.MAX_SAFE_INTEGER : Number(b.display_order);
+            if(ao!==bo) return ao-bo;
+            return new Date(a?.created_at||0)-new Date(b?.created_at||0);
+        });
 
-    return recentJobMedia.find(media=>{
-        const name = String(media?.name || "").toLowerCase().trim();
-        const folder = String(media?.folder || "").toLowerCase().trim();
-
-        return (title && name.includes(title)) ||
-            (slug && name.includes(slug)) ||
-            (title && folder.includes(title)) ||
-            (slug && folder.includes(slug));
-    }) || null;
+    if(preferredType === "video") return items.find(media=>mediaIsVideo(media)) || null;
+    if(preferredType === "photography") return items.find(media=>mediaDisplayType(media)==="photography") || null;
+    if(preferredType === "graphics") return items.find(media=>mediaDisplayType(media)==="graphics") || null;
+    return items[0] || null;
 }
 
 function recentJobVideoForProject(project){
-    const title = String(project?.title || "").toLowerCase().trim();
-    const slug = String(project?.slug || "").toLowerCase().trim();
-    const match = recentJobMedia.find(function(media){
-        const type = String(media?.type || "").toLowerCase();
-        const url = String(media?.url || "");
-        const isVideo = type.includes("video") || /\.(mp4|webm|mov)(\?|$)/i.test(url);
-        if(!isVideo || !url) return false;
-        const name = String(media?.name || "").toLowerCase().trim();
-        const folder = String(media?.folder || "").toLowerCase().trim();
-        return (title && name.includes(title)) || (slug && name.includes(slug)) ||
-               (title && folder.includes(title)) || (slug && folder.includes(slug));
-    });
-    return match?.url || "";
+    const match=recentJobMediaForProject(project,"video");
+    return match?.url||"";
 }
-
 function recentJobCover(project){
     const videoUrl = recentJobVideoForProject(project);
     if(videoUrl) return {url:videoUrl,type:"video"};
-    if(project?.cover_image) return {url:project.cover_image,type:"image"};
     const media = recentJobMediaForProject(project);
     if(media?.url){
         const type = String(media.type || "").toLowerCase();
@@ -6672,12 +7210,8 @@ function recentJobCover(project){
 }
 
 function recentJobImageCover(project){
-    const coverUrl = String(project?.cover_image || "").trim();
-    if(coverUrl && !/\.(mp4|webm|mov)(\?|$)/i.test(coverUrl)){
-        return {url:coverUrl,type:"image"};
-    }
-
-    const media = recentJobMediaForProject(project);
+    const category=recentJobCategory(project);
+    const media = recentJobMediaForProject(project, category === "design" ? "graphics" : "photography") || recentJobMediaForProject(project);
     if(media?.url){
         const type = String(media.type || "").toLowerCase();
         const isVideo = type.includes("video") || /\.(mp4|webm|mov)(\?|$)/i.test(String(media.url));
@@ -6711,7 +7245,9 @@ function recentJobCard(project,position,mediaMode){
 
     if(cover.url){
         if(cover.type === "video"){
-            mediaHtml = `<video src="${String(cover.url).replace(/"/g,"&quot;")}" muted loop autoplay playsinline preload="auto"></video>`;
+            const posterMedia = recentJobMediaForProject(project,"photography");
+            const poster = posterMedia?.url ? ` poster="${String(posterMedia.url).replace(/"/g,"&quot;")}"` : "";
+            mediaHtml = `<video src="${String(cover.url).replace(/"/g,"&quot;")}"${poster} muted loop autoplay playsinline preload="auto"></video>`;
         }else{
             mediaHtml = `<img src="${String(cover.url).replace(/"/g,"&quot;")}" alt="${String(project.title || "DyOla project").replace(/"/g,"&quot;")}" loading="lazy">`;
         }
@@ -6852,12 +7388,12 @@ async function loadRecentJobs(){
         const [projectResult,mediaResult] = await Promise.all([
             supabaseClient
                 .from("projects")
-                .select("id,title,slug,description,category,subcategory,client,location,cover_image,published,created_at")
+                .select("id,title,slug,description,category,subcategory,client,location,published,created_at")
                 .eq("published",true)
                 .order("created_at",{ascending:false}),
             supabaseClient
                 .from("media")
-                .select("id,name,type,folder,url,r2_key")
+                .select("id,name,display_name,type,folder,url,r2_key,project_id,display_order,created_at")
         ]);
 
         if(projectResult.error){
@@ -6865,10 +7401,12 @@ async function loadRecentJobs(){
             return;
         }
 
-        recentJobMedia = mediaResult.data || [];
+        const publishedProjects=projectResult.data || [];
+        const publishedIds=new Set(publishedProjects.map(project=>String(project.id)));
+        recentJobMedia=(mediaResult.data || []).filter(media=>publishedIds.has(String(media?.project_id||"")) && media?.url);
 
-        /* One combined pool — Recent Jobs is a billboard, not a category carousel. */
-        recentJobStages = buildRecentJobFrames(projectResult.data || []);
+        /* One combined pool — Recent Jobs is driven only by media attached to published projects. */
+        recentJobStages = buildRecentJobFrames(publishedProjects);
 
         if(!recentJobStages ||
            ((!recentJobStages.videos || !recentJobStages.videos.length) &&
@@ -6909,6 +7447,12 @@ let activeProject = null;
 let activeProjectMedia = [];
 let activeProjectMediaFilter = "all";
 
+let projectGalleryItems = [];
+let projectGalleryIndex = 0;
+let projectGalleryTouchStartX = 0;
+let projectGalleryTouchStartY = 0;
+let projectGalleryControlsTimer = null;
+
 function mediaIsVideo(media){
     const type = String(media?.type || "").toLowerCase();
     return type.includes("video") || /\.(mp4|webm|mov)(\?|$)/i.test(String(media?.url || ""));
@@ -6923,15 +7467,22 @@ function normalizeProjectMatch(value){
 }
 
 function getProjectMedia(project){
-    const title = normalizeProjectMatch(project?.title);
-    const slug = normalizeProjectMatch(project?.slug);
+    if(!project) return [];
 
-    return (window.dyolaMedia || []).filter(function(media){
-        const name = normalizeProjectMatch(media?.name);
-        const folder = normalizeProjectMatch(media?.folder);
-        return (title && (name.includes(title) || folder.includes(title))) ||
-               (slug && (name.includes(slug) || folder.includes(slug)));
-    });
+    return (window.dyolaMedia || [])
+        .filter(function(media){
+            return String(media?.project_id || "") === String(project.id || "");
+        })
+        .filter(function(media){
+            return !!media?.url;
+        })
+        .slice()
+        .sort(function(a,b){
+            const ao=a?.display_order==null ? Number.MAX_SAFE_INTEGER : Number(a.display_order);
+            const bo=b?.display_order==null ? Number.MAX_SAFE_INTEGER : Number(b.display_order);
+            if(ao!==bo) return ao-bo;
+            return new Date(a?.created_at||0)-new Date(b?.created_at||0);
+        });
 }
 
 function mediaDisplayType(media){
@@ -6941,45 +7492,240 @@ function mediaDisplayType(media){
     return "photography";
 }
 
+function projectGalleryTypeLabel(media){
+    const type=mediaDisplayType(media);
+    if(type==="graphics") return "Design";
+    if(type==="photography") return "Photography";
+    return "Video";
+}
+
+function projectGalleryItemsFor(media){
+    const type=mediaDisplayType(media);
+
+    return (activeProjectMedia||[]).filter(function(item){
+        return mediaDisplayType(item)===type && item?.url;
+    });
+}
+
+function resetProjectGalleryControls(){
+    const nav=document.querySelector(".project-viewer-nav");
+    if(!nav) return;
+
+    if(projectGalleryControlsTimer){
+        clearTimeout(projectGalleryControlsTimer);
+        projectGalleryControlsTimer=null;
+    }
+
+    nav.classList.remove("viewer-controls-faded");
+
+    const item=projectGalleryItems[projectGalleryIndex];
+    if(!item || mediaIsVideo(item) || projectGalleryItems.length<=1) return;
+
+    projectGalleryControlsTimer=setTimeout(function(){
+        nav.classList.add("viewer-controls-faded");
+    },2000);
+}
+
+function renderProjectGalleryItem(){
+    if(!projectViewer || !projectViewerMedia) return;
+
+    const item=projectGalleryItems[projectGalleryIndex];
+    if(!item || !item.url) return;
+
+    const title=item.display_name || storyMediaTitle(
+        item,
+        mediaDisplayType(item),
+        projectGalleryIndex
+    );
+
+    projectViewerTitle.textContent=title;
+    const counter=document.getElementById("projectViewerCounter");
+    if(counter){
+        counter.textContent=
+            `${projectGalleryTypeLabel(item)} · ${projectGalleryIndex+1} of ${projectGalleryItems.length}`;
+    }
+
+    const prev=document.getElementById("projectViewerPrev");
+    const next=document.getElementById("projectViewerNext");
+
+    if(prev) prev.hidden=projectGalleryItems.length<=1;
+    if(next) next.hidden=projectGalleryItems.length<=1;
+
+    const nav=document.querySelector(".project-viewer-nav");
+    if(nav) nav.style.display=projectGalleryItems.length>1 ? "" : "none";
+
+    projectViewerMedia.querySelectorAll(".project-viewer-slide").forEach(function(node){
+        node.remove();
+    });
+
+    const slide=document.createElement("div");
+    slide.className="project-viewer-slide";
+
+    if(mediaIsVideo(item)){
+        const video=document.createElement("video");
+        video.src=item.url;
+        video.controls=true;
+        video.playsInline=true;
+        video.autoplay=true;
+        video.muted=true;
+        video.preload="metadata";
+        slide.appendChild(video);
+        video.play().catch(()=>{});
+    }else{
+        const img=document.createElement("img");
+        img.src=item.url;
+        img.alt=title;
+        img.draggable=false;
+
+        // Scale the complete photo to the largest size that fits the
+        // available viewer area. This allows the image to grow on larger
+        // phones/tablets without ever cropping or changing its aspect ratio.
+        const fitImage = function(){
+            if(!img.naturalWidth || !img.naturalHeight) return;
+
+            const availableWidth=slide.clientWidth;
+            const availableHeight=slide.clientHeight;
+            if(!availableWidth || !availableHeight) return;
+
+            const scale=Math.min(
+                availableWidth / img.naturalWidth,
+                availableHeight / img.naturalHeight
+            );
+
+            img.style.width=Math.max(1,Math.round(img.naturalWidth * scale))+"px";
+            img.style.height=Math.max(1,Math.round(img.naturalHeight * scale))+"px";
+            img.style.maxWidth="none";
+            img.style.maxHeight="none";
+        };
+
+        img.addEventListener("load",function(){
+            requestAnimationFrame(fitImage);
+        },{once:true});
+
+        window.addEventListener("resize",fitImage);
+        slide.appendChild(img);
+
+        // If the image is already cached, size it immediately.
+        if(img.complete) requestAnimationFrame(fitImage);
+    }
+
+    projectViewerMedia.insertBefore(
+        slide,
+        projectViewerMedia.querySelector(".project-viewer-nav")
+    );
+
+    resetProjectGalleryControls();
+}
+
 function closePublicProjectViewer(){
     if(!projectViewer) return;
-    const video = projectViewerMedia?.querySelector("video");
+
+    const video=projectViewerMedia?.querySelector("video");
     if(video){
         video.pause();
         video.removeAttribute("src");
         video.load();
     }
-    if(projectViewerMedia) projectViewerMedia.innerHTML = "";
+
+    if(projectViewerMedia){
+        projectViewerMedia.querySelectorAll(".project-viewer-slide").forEach(function(node){
+            node.remove();
+        });
+    }
+
+    projectGalleryItems=[];
+    projectGalleryIndex=0;
+    if(projectGalleryControlsTimer){
+        clearTimeout(projectGalleryControlsTimer);
+        projectGalleryControlsTimer=null;
+    }
+    document.querySelector(".project-viewer-nav")?.classList.remove("viewer-controls-faded");
+
     projectViewer.classList.remove("open");
     projectViewer.setAttribute("aria-hidden","true");
 }
 
 function openMediaViewer(media,title,poster){
-    if(!projectViewer || !projectViewerMedia) return;
-    projectViewerTitle.textContent = title || media?.name || "DyOla Project";
-    projectViewerMedia.innerHTML = "";
+    if(!projectViewer || !projectViewerMedia || !media) return;
 
-    if(mediaIsVideo(media)){
-        const video = document.createElement("video");
-        video.src = media.url;
-        video.controls = true;
-        video.playsInline = true;
-        video.autoplay = true;
-        video.muted = true;
-        if(poster) video.poster = poster;
-        projectViewerMedia.appendChild(video);
-        video.play().catch(()=>{});
-    }else if(media?.url){
-        const img = document.createElement("img");
-        img.src = media.url;
-        img.alt = title || media.name || "DyOla project media";
-        projectViewerMedia.appendChild(img);
-    }
+    projectGalleryItems=projectGalleryItemsFor(media);
+
+    const foundIndex=projectGalleryItems.findIndex(function(item){
+        return String(item.id||"")===String(media.id||"");
+    });
+
+    projectGalleryIndex=foundIndex>=0 ? foundIndex : 0;
 
     projectViewer.classList.add("open");
     projectViewer.setAttribute("aria-hidden","false");
+
+    renderProjectGalleryItem();
 }
 
+function moveProjectGallery(direction){
+    if(projectGalleryItems.length<=1) return;
+
+    projectGalleryIndex=
+        (projectGalleryIndex + direction + projectGalleryItems.length)
+        % projectGalleryItems.length;
+
+    renderProjectGalleryItem();
+}
+
+document.getElementById("projectViewerPrev")?.addEventListener("click",function(event){
+    event.preventDefault();
+    event.stopPropagation();
+    moveProjectGallery(-1);
+});
+
+document.getElementById("projectViewerNext")?.addEventListener("click",function(event){
+    event.preventDefault();
+    event.stopPropagation();
+    moveProjectGallery(1);
+});
+
+projectViewerMedia?.addEventListener("touchstart",function(event){
+    resetProjectGalleryControls();
+    const touch=event.changedTouches[0];
+    projectGalleryTouchStartX=touch.clientX;
+    projectGalleryTouchStartY=touch.clientY;
+},{passive:true});
+
+projectViewerMedia?.addEventListener("click",function(){
+    if(!projectViewer?.classList.contains("open")) return;
+    if(mediaIsVideo(projectGalleryItems[projectGalleryIndex])) return;
+    resetProjectGalleryControls();
+});
+
+projectViewerMedia?.addEventListener("touchend",function(event){
+    if(projectGalleryItems.length<=1) return;
+
+    const touch=event.changedTouches[0];
+    const dx=touch.clientX-projectGalleryTouchStartX;
+    const dy=touch.clientY-projectGalleryTouchStartY;
+
+    if(Math.abs(dx)<50 || Math.abs(dx)<Math.abs(dy)) return;
+
+    if(dx<0){
+        moveProjectGallery(1);
+    }else{
+        moveProjectGallery(-1);
+    }
+},{passive:true});
+
+document.addEventListener("keydown",function(event){
+    if(!projectViewer?.classList.contains("open")) return;
+
+    if(event.key==="ArrowLeft"){
+        event.preventDefault();
+        moveProjectGallery(-1);
+    }else if(event.key==="ArrowRight"){
+        event.preventDefault();
+        moveProjectGallery(1);
+    }else if(event.key==="Escape"){
+        closePublicProjectViewer();
+    }
+});
 function renderProjectMedia(filter){
     const grid = projectStoryContent?.querySelector("#projectStoryMediaGrid");
     if(!grid) return;
@@ -6992,15 +7738,13 @@ function renderProjectMedia(filter){
     grid.innerHTML = visible.length
         ? visible.map(function(media,index){
             const type = mediaDisplayType(media);
-            const title = media.name || (type === "video" ? "Project Video" : type === "graphics" ? "Project Graphic" : "Project Photo");
-            const poster = activeProject?.cover_image || "";
+            const title = media.display_name || (type === "video" ? "Project Video" : type === "graphics" ? "Project Graphic" : "Project Photo");
             const safeMediaUrl = escapeHtml(media.url || "");
-            const safePoster = escapeHtml(poster || "");
             const mediaVisual = type === "video"
                 ? (safeMediaUrl
-                    ? `<video class="project-story-media-video" src="${safeMediaUrl}" ${safePoster ? `poster="${safePoster}"` : ""} muted playsinline preload="metadata"></video>`
-                    : `<img src="${safePoster}" alt="${escapeHtml(title)}" loading="lazy">`)
-                : `<img src="${safeMediaUrl || safePoster}" alt="${escapeHtml(title)}" loading="lazy">`;
+                    ? `<video class="project-story-media-video" src="${safeMediaUrl}" muted playsinline preload="metadata"></video>`
+                    : "")
+                : `<img src="${safeMediaUrl}" alt="${escapeHtml(title)}" loading="lazy">`;
 
             return `<button type="button" class="project-story-media-card ${index === 0 ? "featured" : ""}"
                 data-media-id="${escapeHtml(media.id || "")}"
@@ -7016,7 +7760,22 @@ function renderProjectMedia(filter){
         : `<div class="project-story-media-empty">No ${escapeHtml(filter === "all" ? "project" : filter)} media has been linked to this project yet.</div>`;
 }
 
+function firstMediaUrl(items){
+    const item=(items||[]).find(function(media){return media?.url;});
+    return item?.url||"";
+}
+
+function firstProjectImageUrl(items){
+    const item=(items||[]).find(function(media){
+        return media?.url && !mediaIsVideo(media);
+    });
+    return item?.url||"";
+}
+
 function storyMediaTitle(media,type,index){
+    const displayName=String(media?.display_name || "").trim();
+    if(displayName) return displayName.replace(/\.[^.]+$/,"");
+
     const raw = String(media?.name || "").replace(/\.[^.]+$/," ").replace(/[_-]+/g," ").trim();
     if(raw) return raw;
     if(type === "video") return ["Project Documentary","Property Walkthrough","Client Testimonial","Development Update"][index] || "Project Video";
@@ -7031,10 +7790,10 @@ function storyMediaDuration(media){
 
 function storyMediaCard(media,type,index){
     const title = storyMediaTitle(media,type,index);
-    const poster = activeProject?.cover_image || "";
+    const poster = firstProjectImageUrl(activeProjectMedia);
     const url = media?.url || poster;
     const visual = type === "video"
-        ? (url ? `<video class="project-story-media-video" src="${escapeHtml(url)}" ${poster ? `poster="${escapeHtml(poster)}"` : ""} muted playsinline preload="metadata"></video>` : `<div class="project-story-placeholder-media"></div>`)
+        ? (url ? `<video class="project-story-media-video" src="${escapeHtml(url)}" ${poster ? `poster="${escapeHtml(poster)}"` : ""} muted autoplay loop playsinline preload="auto" aria-label="${escapeHtml(title)}"></video>` : `<div class="project-story-placeholder-media"></div>`)
         : `<img src="${escapeHtml(url)}" alt="${escapeHtml(title)}" loading="lazy">`;
 
     return `<button type="button" class="project-story-media-card" data-media-id="${escapeHtml(media?.id || "")}" aria-label="Open ${escapeHtml(title)}">
@@ -7062,6 +7821,48 @@ function renderStoryMediaGroup(key,items,title,limit){
     </section>`;
 }
 
+async function loadProjectClientPerspective(project){
+    const box=document.getElementById("projectClientPerspective");
+    const controls=document.getElementById("projectClientPerspectiveControls");
+    if(!box) return;
+    try{
+        const result=await supabaseClient.from("review_project_assignments").select("review_id").eq("project_id",project.id);
+        if(result.error) throw result.error;
+        const ids=(result.data||[]).map(r=>r.review_id).filter(Boolean);
+        if(!ids.length){
+            box.innerHTML="<blockquote>No client perspective has been assigned to this project yet.</blockquote>";
+            if(controls) controls.hidden=true;
+            return;
+        }
+        const reviewsResult=await supabaseClient.from("reviews").select("id,name,company,position,review,photo_url,status,created_at").in("id",ids).eq("status","approved").order("created_at",{ascending:false});
+        if(reviewsResult.error) throw reviewsResult.error;
+        const reviews=reviewsResult.data||[];
+        if(!reviews.length){
+            box.innerHTML="<blockquote>No approved client perspective is available for this project yet.</blockquote>";
+            if(controls) controls.hidden=true;
+            return;
+        }
+        let index=0;
+        function render(){
+            const r=reviews[index];
+            box.innerHTML=`<blockquote>${escapeHtml(r.review||"")}</blockquote>${r.name?`<cite>${escapeHtml(r.name)}${r.position||r.company?` · ${escapeHtml([r.position,r.company].filter(Boolean).join(" · "))}`:""}</cite>`:""}`;
+            if(controls){
+                controls.hidden=reviews.length<=1;
+                controls.innerHTML=reviews.length>1
+                    ? `<button type="button" data-prev-review aria-label="Previous review">←</button><span>${index+1} / ${reviews.length}</span><button type="button" data-next-review aria-label="Next review">→</button>`
+                    : "";
+                controls.querySelector("[data-prev-review]")?.addEventListener("click",()=>{index=(index-1+reviews.length)%reviews.length;render();});
+                controls.querySelector("[data-next-review]")?.addEventListener("click",()=>{index=(index+1)%reviews.length;render();});
+            }
+        }
+        render();
+    }catch(error){
+        console.error("Could not load project client perspective:",error);
+        box.innerHTML="<blockquote>Client perspective is unavailable right now.</blockquote>";
+        if(controls) controls.hidden=true;
+    }
+}
+
 function buildProjectStory(project){
     activeProject = project;
     activeProjectMedia = getProjectMedia(project);
@@ -7075,9 +7876,13 @@ function buildProjectStory(project){
     const industry = project.category || project.subcategory || "Project";
     const location = project.location || "";
     const year = project.created_at ? new Date(project.created_at).getFullYear() : "";
-    const description = project.description || "A visual production project created to help communicate the value of the business and its work.";
-    const cover = project.cover_image || (activeProjectMedia[0]?.url || "");
+    const description = project.description || "";
+    const challenge = project.challenge || "";
+    const approach = project.approach || "";
+    const outcome = project.outcome || "";
     const firstVideo = videos[0] || null;
+    const firstImage = photos[0] || null;
+    const cover = firstVideo?.url || firstImage?.url || "";
     const approachImage = photos[0]?.url || cover;
     const challengeImage = photos[1]?.url || cover;
 
@@ -7103,7 +7908,7 @@ function buildProjectStory(project){
             <div class="project-story-two-col">
                 <div><span class="project-story-number">01</span><h2>The Challenge</h2></div>
                 <div class="project-story-feature-copy">
-                    <p>${escapeHtml(description)}</p>
+                    ${challenge ? `<p>${escapeHtml(challenge)}</p>` : ""}
                     ${challengeImage ? `<div class="project-story-feature-thumb"><img src="${escapeHtml(challengeImage)}" alt="Project visual" loading="lazy"></div>` : ""}
                 </div>
             </div>
@@ -7113,7 +7918,7 @@ function buildProjectStory(project){
             <div class="project-story-two-col">
                 <div><span class="project-story-number">02</span><h2>Our Approach</h2></div>
                 <div class="project-story-feature-copy">
-                    <p>We created a complete visual production package, bringing together video, photography and supporting graphics as one connected story designed to showcase the work and communicate the brand's value clearly.</p>
+                    ${approach ? `<p>${escapeHtml(approach)}</p>` : ""}
                     ${approachImage ? `<div class="project-story-feature-thumb"><img src="${escapeHtml(approachImage)}" alt="Project visual" loading="lazy"></div>` : ""}
                 </div>
             </div>
@@ -7143,7 +7948,7 @@ function buildProjectStory(project){
             <div class="project-story-two-col">
                 <div><span class="project-story-number">04</span><h2>The Outcome</h2></div>
                 <div>
-                    <p>The visual content creates a connected library of assets that can be reused across the brand's communication, presentations and digital presence.</p>
+                    ${outcome ? `<p>${escapeHtml(outcome)}</p>` : ""}
                     <div class="project-story-outcome-grid">
                         <div class="project-story-stat"><strong>${videos.length}</strong><span>Video${videos.length===1?"":"s"} produced</span></div>
                         <div class="project-story-stat"><strong>${photos.length}</strong><span>Photograph${photos.length===1?"":"s"}</span></div>
@@ -7156,9 +7961,11 @@ function buildProjectStory(project){
         <section class="project-story-section">
             <div class="project-story-two-col">
                 <div><span class="project-story-number">05</span><h2>Client's Perspective</h2></div>
-                <div class="project-story-testimonial">
-                    <blockquote>Client feedback can be added here when an approved review is available for this project.</blockquote>
-                    ${project.client ? `<cite>${escapeHtml(project.client)}</cite>` : ""}
+                <div class="project-story-testimonial-wrap">
+                    <div class="project-story-testimonial" id="projectClientPerspective">
+                        <blockquote>Loading client perspective…</blockquote>
+                    </div>
+                    <div class="project-story-testimonial-controls" id="projectClientPerspectiveControls" hidden aria-label="Client perspective navigation"></div>
                 </div>
             </div>
         </section>
@@ -7167,7 +7974,7 @@ function buildProjectStory(project){
             <div class="project-story-number">RELATED PROJECTS</div>
             <div class="project-story-related-grid">
                 ${related.map(item=>`<button type="button" class="project-story-related-card" data-related-project-id="${escapeHtml(item.id)}">
-                    ${item.cover_image ? `<img src="${escapeHtml(item.cover_image)}" alt="${escapeHtml(item.title || "Project")}" loading="lazy">` : `<div class="project-story-placeholder-media"></div>`}
+                    ${firstMediaUrl(publicProjectMedia(item,window.dyolaMedia||[])) ? `<img src="${escapeHtml(firstMediaUrl(publicProjectMedia(item,window.dyolaMedia||[])))}" alt="${escapeHtml(item.title || "Project")}" loading="lazy">` : `<div class="project-story-placeholder-media"></div>`}
                     <span class="project-story-related-copy"><strong>${escapeHtml(item.title || "Project")}</strong><span>${escapeHtml(item.category || item.subcategory || "Project")}</span></span>
                 </button>`).join("")}
             </div>
@@ -7180,6 +7987,8 @@ function buildProjectStory(project){
             <button type="button" class="white-button js-start-project">Start a Project →</button>
         </section>
     `;
+
+    loadProjectClientPerspective(project);
 
     function showStoryFilter(filter){
         const groups = projectStoryContent.querySelectorAll("[data-story-group]");
@@ -7221,7 +8030,7 @@ function buildProjectStory(project){
         if(media && media.url){
             event.preventDefault();
             event.stopPropagation();
-            openMediaViewer(media,storyMediaTitle(media,mediaDisplayType(media),0),activeProject?.cover_image || "");
+            openMediaViewer(media,media.display_name || storyMediaTitle(media,mediaDisplayType(media),0),"");
         }
     },true);
 
@@ -7307,21 +8116,10 @@ document.addEventListener("click",function(event){
     const media = recentJobMediaForProject(project);
 
     if(media && media.url){
-        openMediaViewer(media, project.title || media.name, project.cover_image || "");
+        openMediaViewer(media, project.title || media.name, media.url || "");
         return;
     }
 
-    if(project.cover_image){
-        openMediaViewer(
-            {
-                url: project.cover_image,
-                type: "image",
-                name: project.title || "DyOla Project"
-            },
-            project.title || "DyOla Project",
-            project.cover_image
-        );
-    }
 });
 
 document.addEventListener("keydown",function(event){
@@ -7809,31 +8607,34 @@ reviewForm.addEventListener(
         let photoUrl = null;
 
         if(photoFile){
-            const safeName = photoFile.name.toLowerCase().replace(/[^a-z0-9.]+/g,"-");
-            const photoPath = "reviewers/" + Date.now() + "-" + Math.random().toString(36).slice(2,8) + "-" + safeName;
+            const reviewPhotoWorkerUrl = "https://wild-firefly-e101.latmaxsgallery.workers.dev/review-upload";
+            const formData = new FormData();
+            formData.append("file", photoFile);
 
-            const uploadResult = await supabaseClient
-                .storage
-                .from("review-photos")
-                .upload(photoPath,photoFile,{
-                    cacheControl:"3600",
-                    upsert:false,
-                    contentType:photoFile.type
+            try{
+                const uploadResponse = await fetch(reviewPhotoWorkerUrl,{
+                    method:"POST",
+                    body:formData
                 });
 
-            if(uploadResult.error){
-                console.error(uploadResult.error);
+                const uploadResult = await uploadResponse.json().catch(function(){ return {}; });
+
+                if(!uploadResponse.ok || !uploadResult?.success || !uploadResult?.url){
+                    console.error("Review photo upload failed:",uploadResult);
+                    alert("We could not upload your photo right now. Please try again or submit without a photo.");
+                    button.disabled = false;
+                    button.textContent = "Submit Review";
+                    return;
+                }
+
+                photoUrl = uploadResult.url;
+            }catch(error){
+                console.error("Review photo upload failed:",error);
                 alert("We could not upload your photo right now. Please try again or submit without a photo.");
                 button.disabled = false;
                 button.textContent = "Submit Review";
                 return;
             }
-
-            photoUrl = supabaseClient
-                .storage
-                .from("review-photos")
-                .getPublicUrl(photoPath)
-                .data.publicUrl;
         }
 
         const review = {
@@ -7917,6 +8718,25 @@ reviewForm.addEventListener(
 /* =========================================================
    LOAD ACTIVE COMPANIES
    ========================================================= */
+
+async function loadGeneralReviews(){
+    const list=document.getElementById("reviewList");
+    if(!list) return;
+    try{
+        const result=await supabaseClient.from("reviews").select("id,name,company,position,review,photo_url,status,created_at").eq("status","approved").order("created_at",{ascending:false});
+        if(result.error) throw result.error;
+        const reviews=result.data||[];
+        if(!reviews.length){list.innerHTML="";return;}
+        list.innerHTML=reviews.map(function(r){
+            return `<article class="review-card">${r.photo_url?`<img src="${escapeHtml(r.photo_url)}" alt="${escapeHtml(r.name||"Client")}" class="review-avatar" loading="lazy">`:""}<div class="review-stars">★★★★★</div><blockquote>“${escapeHtml(r.review||"")}”</blockquote><div class="review-author">${escapeHtml(r.name||"Client")}${r.position||r.company?` · ${escapeHtml([r.position,r.company].filter(Boolean).join(" · "))}`:""}</div></article>`;
+        }).join("");
+    }catch(error){
+        console.error("Could not load general reviews:",error);
+        list.innerHTML="";
+    }
+}
+
+loadGeneralReviews();
 
 async function loadActiveCompanies(){
 
